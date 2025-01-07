@@ -1,0 +1,9 @@
+nohup: ignoring input
+2025-01-07T15:25:38 (svs.sh:211:main) ./svs.sh --lang zh --local_data_opts --stage 1 --feats_type raw --fs 24000 --fmax 22050 --fmin 0 --n_fft 2048 --n_shift 256 --win_length 2048 --token_type phn --g2p None --cleaner none --train_config conf/train.yaml --inference_config conf/decode.yaml --train_set tr_no_dev --valid_set dev --test_sets dev eval --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --audio_format wav --stage 7 --stop_stage 7 --svs_task gan_svs --pitch_extract dio --feats_extract fbank --feats_normalize none --train_config conf/train.yaml --score_feats_extract syllable_score_feats --inference_model latest.pth --write_collected_feats true
+2025-01-07T15:25:39 (svs.sh:913:main) Stage 7: Decoding: training_dir=exp/svs_train_raw_phn_None_zh
+2025-01-07T15:25:39 (svs.sh:953:main) Generate 'exp/svs_train_raw_phn_None_zh/decode_latest/run.sh'. You can resume the process from stage 7 using this script
+2025-01-07T15:25:39 (svs.sh:1010:main) Decoding started... log: 'exp/svs_train_raw_phn_None_zh/decode_latest/dev/log/svs_inference.*.log'
+2025-01-07T15:27:50 (svs.sh:1010:main) Decoding started... log: 'exp/svs_train_raw_phn_None_zh/decode_latest/eval/log/svs_inference.*.log'
+2025-01-07T15:31:35 (svs.sh:1161:main) Skip the packing stage
+2025-01-07T15:31:35 (svs.sh:1218:main) Skip the uploading to HuggingFace stage
+2025-01-07T15:31:35 (svs.sh:1221:main) Successfully finished. [elapsed=357s]

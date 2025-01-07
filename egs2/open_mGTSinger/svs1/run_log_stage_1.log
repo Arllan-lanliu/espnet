@@ -1,0 +1,211 @@
+nohup: ignoring input
+2025-01-05T08:16:24 (svs.sh:211:main) ./svs.sh --lang zh --local_data_opts --stage 1 --feats_type raw --fs 24000 --fmax 22050 --fmin 0 --n_fft 2048 --n_shift 256 --win_length 2048 --token_type phn --g2p None --cleaner none --train_config conf/train.yaml --inference_config conf/decode.yaml --train_set tr_no_dev --valid_set dev --test_sets dev eval --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --audio_format wav --fs 24000 --n_shift 256 --win_length 2048 --stage 1 --stop_stage 1
+2025-01-05T08:16:25 (svs.sh:313:main) Stage 1: Data preparation for data/tr_no_dev, data/dev, etc.
+2025-01-05T08:16:25 (data.sh:27:main) local/data.sh --stage 1 --fs 24000 --g2p None
+2025-01-05T08:16:25 (data.sh:51:main) stage 1: Dataset split 
+sox WARN rate: rate clipped 17 samples; decrease volume?
+sox WARN dither: dither clipped 15 samples; decrease volume?
+sox WARN rate: rate clipped 254 samples; decrease volume?
+sox WARN dither: dither clipped 218 samples; decrease volume?
+sox WARN rate: rate clipped 2 samples; decrease volume?
+sox WARN dither: dither clipped 2 samples; decrease volume?
+sox WARN rate: rate clipped 7 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 78 samples; decrease volume?
+sox WARN dither: dither clipped 67 samples; decrease volume?
+sox WARN rate: rate clipped 7 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 20 samples; decrease volume?
+sox WARN dither: dither clipped 19 samples; decrease volume?
+sox WARN rate: rate clipped 28 samples; decrease volume?
+sox WARN dither: dither clipped 24 samples; decrease volume?
+sox WARN rate: rate clipped 754 samples; decrease volume?
+sox WARN dither: dither clipped 666 samples; decrease volume?
+sox WARN rate: rate clipped 6 samples; decrease volume?
+sox WARN dither: dither clipped 6 samples; decrease volume?
+sox WARN rate: rate clipped 13 samples; decrease volume?
+sox WARN dither: dither clipped 13 samples; decrease volume?
+sox WARN rate: rate clipped 28 samples; decrease volume?
+sox WARN dither: dither clipped 24 samples; decrease volume?
+sox WARN rate: rate clipped 144 samples; decrease volume?
+sox WARN dither: dither clipped 131 samples; decrease volume?
+sox WARN rate: rate clipped 130 samples; decrease volume?
+sox WARN dither: dither clipped 118 samples; decrease volume?
+sox WARN rate: rate clipped 8 samples; decrease volume?
+sox WARN dither: dither clipped 7 samples; decrease volume?
+sox WARN rate: rate clipped 307 samples; decrease volume?
+sox WARN dither: dither clipped 273 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 664 samples; decrease volume?
+sox WARN dither: dither clipped 593 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 3 samples; decrease volume?
+sox WARN rate: rate clipped 354 samples; decrease volume?
+sox WARN dither: dither clipped 307 samples; decrease volume?
+sox WARN rate: rate clipped 94 samples; decrease volume?
+sox WARN dither: dither clipped 83 samples; decrease volume?
+sox WARN rate: rate clipped 404 samples; decrease volume?
+sox WARN dither: dither clipped 347 samples; decrease volume?
+sox WARN rate: rate clipped 3 samples; decrease volume?
+sox WARN dither: dither clipped 2 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 2 samples; decrease volume?
+sox WARN rate: rate clipped 46 samples; decrease volume?
+sox WARN dither: dither clipped 39 samples; decrease volume?
+sox WARN rate: rate clipped 123 samples; decrease volume?
+sox WARN dither: dither clipped 108 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 190 samples; decrease volume?
+sox WARN dither: dither clipped 167 samples; decrease volume?
+sox WARN rate: rate clipped 36 samples; decrease volume?
+sox WARN dither: dither clipped 33 samples; decrease volume?
+sox WARN rate: rate clipped 44 samples; decrease volume?
+sox WARN dither: dither clipped 40 samples; decrease volume?
+sox WARN rate: rate clipped 14 samples; decrease volume?
+sox WARN dither: dither clipped 13 samples; decrease volume?
+sox WARN rate: rate clipped 19 samples; decrease volume?
+sox WARN dither: dither clipped 17 samples; decrease volume?
+sox WARN rate: rate clipped 324 samples; decrease volume?
+sox WARN dither: dither clipped 288 samples; decrease volume?
+sox WARN rate: rate clipped 516 samples; decrease volume?
+sox WARN dither: dither clipped 451 samples; decrease volume?
+sox WARN rate: rate clipped 260 samples; decrease volume?
+sox WARN dither: dither clipped 217 samples; decrease volume?
+sox WARN rate: rate clipped 1205 samples; decrease volume?
+sox WARN dither: dither clipped 1054 samples; decrease volume?
+sox WARN rate: rate clipped 418 samples; decrease volume?
+sox WARN dither: dither clipped 374 samples; decrease volume?
+sox WARN rate: rate clipped 28 samples; decrease volume?
+sox WARN dither: dither clipped 26 samples; decrease volume?
+sox WARN rate: rate clipped 374 samples; decrease volume?
+sox WARN dither: dither clipped 326 samples; decrease volume?
+sox WARN rate: rate clipped 261 samples; decrease volume?
+sox WARN dither: dither clipped 229 samples; decrease volume?
+sox WARN rate: rate clipped 76 samples; decrease volume?
+sox WARN dither: dither clipped 64 samples; decrease volume?
+sox WARN rate: rate clipped 2 samples; decrease volume?
+sox WARN dither: dither clipped 2 samples; decrease volume?
+sox WARN rate: rate clipped 7 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 212 samples; decrease volume?
+sox WARN dither: dither clipped 180 samples; decrease volume?
+sox WARN rate: rate clipped 17 samples; decrease volume?
+sox WARN dither: dither clipped 14 samples; decrease volume?
+sox WARN rate: rate clipped 91 samples; decrease volume?
+sox WARN dither: dither clipped 77 samples; decrease volume?
+sox WARN rate: rate clipped 69 samples; decrease volume?
+sox WARN dither: dither clipped 58 samples; decrease volume?
+sox WARN rate: rate clipped 56 samples; decrease volume?
+sox WARN dither: dither clipped 51 samples; decrease volume?
+sox WARN rate: rate clipped 17 samples; decrease volume?
+sox WARN dither: dither clipped 14 samples; decrease volume?
+sox WARN rate: rate clipped 80 samples; decrease volume?
+sox WARN dither: dither clipped 72 samples; decrease volume?
+sox WARN rate: rate clipped 36 samples; decrease volume?
+sox WARN dither: dither clipped 32 samples; decrease volume?
+sox WARN rate: rate clipped 20 samples; decrease volume?
+sox WARN dither: dither clipped 18 samples; decrease volume?
+sox WARN rate: rate clipped 806 samples; decrease volume?
+sox WARN dither: dither clipped 696 samples; decrease volume?
+sox WARN rate: rate clipped 72 samples; decrease volume?
+sox WARN dither: dither clipped 60 samples; decrease volume?
+sox WARN rate: rate clipped 18 samples; decrease volume?
+sox WARN dither: dither clipped 18 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 4 samples; decrease volume?
+sox WARN rate: rate clipped 8 samples; decrease volume?
+sox WARN dither: dither clipped 8 samples; decrease volume?
+sox WARN rate: rate clipped 9 samples; decrease volume?
+sox WARN dither: dither clipped 8 samples; decrease volume?
+sox WARN rate: rate clipped 185 samples; decrease volume?
+sox WARN dither: dither clipped 154 samples; decrease volume?
+sox WARN rate: rate clipped 87 samples; decrease volume?
+sox WARN dither: dither clipped 77 samples; decrease volume?
+sox WARN rate: rate clipped 128 samples; decrease volume?
+sox WARN dither: dither clipped 112 samples; decrease volume?
+sox WARN rate: rate clipped 8 samples; decrease volume?
+sox WARN dither: dither clipped 5 samples; decrease volume?
+sox WARN rate: rate clipped 95 samples; decrease volume?
+sox WARN dither: dither clipped 83 samples; decrease volume?
+sox WARN rate: rate clipped 138 samples; decrease volume?
+sox WARN dither: dither clipped 124 samples; decrease volume?
+sox WARN rate: rate clipped 13 samples; decrease volume?
+sox WARN dither: dither clipped 11 samples; decrease volume?
+sox WARN rate: rate clipped 16 samples; decrease volume?
+sox WARN dither: dither clipped 14 samples; decrease volume?
+sox WARN rate: rate clipped 49 samples; decrease volume?
+sox WARN dither: dither clipped 43 samples; decrease volume?
+sox WARN rate: rate clipped 259 samples; decrease volume?
+sox WARN dither: dither clipped 223 samples; decrease volume?
+sox WARN rate: rate clipped 20 samples; decrease volume?
+sox WARN dither: dither clipped 19 samples; decrease volume?
+/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/music21/stream/base.py:3689: Music21DeprecationWarning: .flat is deprecated.  Call .flatten() instead
+  return self.iter().getElementsByClass(classFilterList)
+sox WARN rate: rate clipped 113 samples; decrease volume?
+sox WARN dither: dither clipped 104 samples; decrease volume?
+sox WARN rate: rate clipped 11 samples; decrease volume?
+sox WARN dither: dither clipped 10 samples; decrease volume?
+sox WARN rate: rate clipped 3 samples; decrease volume?
+sox WARN dither: dither clipped 3 samples; decrease volume?
+sox WARN rate: rate clipped 33 samples; decrease volume?
+sox WARN dither: dither clipped 26 samples; decrease volume?
+sox WARN rate: rate clipped 503 samples; decrease volume?
+sox WARN dither: dither clipped 448 samples; decrease volume?
+sox WARN rate: rate clipped 143 samples; decrease volume?
+sox WARN dither: dither clipped 125 samples; decrease volume?
+sox WARN rate: rate clipped 12 samples; decrease volume?
+sox WARN dither: dither clipped 10 samples; decrease volume?
+sox WARN rate: rate clipped 78 samples; decrease volume?
+sox WARN dither: dither clipped 70 samples; decrease volume?
+sox WARN rate: rate clipped 1 samples; decrease volume?
+sox WARN dither: dither clipped 1 samples; decrease volume?
+sox WARN rate: rate clipped 31 samples; decrease volume?
+sox WARN dither: dither clipped 26 samples; decrease volume?
+sox WARN rate: rate clipped 63 samples; decrease volume?
+sox WARN dither: dither clipped 52 samples; decrease volume?
+sox WARN rate: rate clipped 87 samples; decrease volume?
+sox WARN dither: dither clipped 77 samples; decrease volume?
+sox WARN rate: rate clipped 221 samples; decrease volume?
+sox WARN dither: dither clipped 197 samples; decrease volume?
+sox WARN rate: rate clipped 11 samples; decrease volume?
+sox WARN dither: dither clipped 10 samples; decrease volume?
+sox WARN rate: rate clipped 9 samples; decrease volume?
+sox WARN dither: dither clipped 7 samples; decrease volume?
+sox WARN rate: rate clipped 1 samples; decrease volume?
+sox WARN dither: dither clipped 1 samples; decrease volume?
+sox WARN rate: rate clipped 16 samples; decrease volume?
+sox WARN dither: dither clipped 15 samples; decrease volume?
+sox WARN rate: rate clipped 4 samples; decrease volume?
+sox WARN dither: dither clipped 2 samples; decrease volume?
+sox WARN rate: rate clipped 11 samples; decrease volume?
+sox WARN dither: dither clipped 10 samples; decrease volume?
+utils/fix_data_dir.sh: file data/tr_no_dev/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 2406 utterances out of 2436
+fix_data_dir.sh: old files are kept in data/tr_no_dev/.backup
+utils/fix_data_dir.sh: file data/dev/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 105 utterances out of 133
+fix_data_dir.sh: old files are kept in data/dev/.backup
+utils/fix_data_dir.sh: file data/eval/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 148 utterances out of 158
+fix_data_dir.sh: old files are kept in data/eval/.backup
+2025-01-05T08:18:31 (data.sh:65:main) Successfully finished. [elapsed=126s]
+2025-01-05T08:18:31 (svs.sh:1161:main) Skip the packing stage
+2025-01-05T08:18:31 (svs.sh:1218:main) Skip the uploading to HuggingFace stage
+2025-01-05T08:18:31 (svs.sh:1221:main) Successfully finished. [elapsed=127s]
