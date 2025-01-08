@@ -1,0 +1,169 @@
+nohup: ignoring input
+2025-01-08T05:46:15 (svs.sh:211:main) ./svs.sh --lang zh --local_data_opts --stage 0 --feats_type raw --pitch_extract dio --ying_extract None --fs 24000 --fmax 22050 --fmin 0 --n_fft 2048 --n_shift 300 --win_length 1200 --token_type phn --g2p None --cleaner none --train_config conf/train.yaml --inference_config conf/decode.yaml --train_set tr_no_dev --valid_set dev --test_sets dev test --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --audio_format wav --stage 6 --stop_stage 6
+2025-01-08T05:46:16 (svs.sh:653:main) Stage 6: SVS Training: train_set=dump/raw/tr_no_dev, valid_set=dump/raw/dev
+2025-01-08T05:46:16 (svs.sh:663:main) CASE 1: AR model training or NAR model with music score duration
+2025-01-08T05:46:16 (svs.sh:870:main) Generate 'exp/svs_train_raw_phn_None_zh/run.sh'. You can resume the process from stage 6 using this script
+2025-01-08T05:46:16 (svs.sh:875:main) SVS training started... log: 'exp/svs_train_raw_phn_None_zh/train.log'
+2025-01-08 05:46:16,424 (launch:94) INFO: /data6/arllan/miniconda/envs/espnetenv/espnetenv/bin/python3 /data5/arllan/espnet/espnet2/bin/launch.py --cmd 'run.pl --name exp/svs_train_raw_phn_None_zh/train.log' --log exp/svs_train_raw_phn_None_zh/train.log --ngpu 1 --num_nodes 1 --init_file_prefix exp/svs_train_raw_phn_None_zh/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.svs_train --use_preprocessor true --token_type phn --token_list data/token_list/phn_None_zh/tokens.txt --non_linguistic_symbols none --cleaner none --g2p None --fs 24000 --normalize global_mvn --resume true --init_param --ignore_init_mismatch false --fold_length 150 --fold_length 240000 --output_dir exp/svs_train_raw_phn_None_zh --config conf/train.yaml --score_feats_extract syllable_score_feats --score_feats_extract_conf fs=24000 --score_feats_extract_conf n_fft=2048 --score_feats_extract_conf win_length=1200 --score_feats_extract_conf hop_length=300 --feats_extract fbank --feats_extract_conf n_fft=2048 --feats_extract_conf hop_length=300 --feats_extract_conf win_length=1200 --pitch_extract dio --ying_extract None --feats_extract_conf fs=24000 --feats_extract_conf fmin=0 --feats_extract_conf fmax=22050 --feats_extract_conf n_mels=80 --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --train_data_path_and_name_and_type dump/raw/tr_no_dev/text,text,text --train_data_path_and_name_and_type dump/raw/tr_no_dev/wav.scp,singing,sound --train_data_path_and_name_and_type dump/raw/tr_no_dev/label,label,duration --train_data_path_and_name_and_type dump/raw/tr_no_dev/score.scp,score,score --train_shape_file exp/svs_stats_raw_phn_None_zh/train/text_shape.phn --train_shape_file exp/svs_stats_raw_phn_None_zh/train/singing_shape --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,singing,sound --valid_data_path_and_name_and_type dump/raw/dev/label,label,duration --valid_data_path_and_name_and_type dump/raw/dev/score.scp,score,score --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/singing_shape --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --pitch_normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz --normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz
+2025-01-08 05:46:16,468 (launch:348) INFO: log file: exp/svs_train_raw_phn_None_zh/train.log
+run.pl: job failed, log is in exp/svs_train_raw_phn_None_zh/train.log
+Command '['run.pl', '--name', 'exp/svs_train_raw_phn_None_zh/train.log', '--gpu', '1', 'exp/svs_train_raw_phn_None_zh/train.log', 'python3', '-m', 'espnet2.bin.svs_train', '--use_preprocessor', 'true', '--token_type', 'phn', '--token_list', 'data/token_list/phn_None_zh/tokens.txt', '--non_linguistic_symbols', 'none', '--cleaner', 'none', '--g2p', 'None', '--fs', '24000', '--normalize', 'global_mvn', '--resume', 'true', '--init_param', '--ignore_init_mismatch', 'false', '--fold_length', '150', '--fold_length', '240000', '--output_dir', 'exp/svs_train_raw_phn_None_zh', '--config', 'conf/train.yaml', '--score_feats_extract', 'syllable_score_feats', '--score_feats_extract_conf', 'fs=24000', '--score_feats_extract_conf', 'n_fft=2048', '--score_feats_extract_conf', 'win_length=1200', '--score_feats_extract_conf', 'hop_length=300', '--feats_extract', 'fbank', '--feats_extract_conf', 'n_fft=2048', '--feats_extract_conf', 'hop_length=300', '--feats_extract_conf', 'win_length=1200', '--pitch_extract', 'dio', '--ying_extract', 'None', '--feats_extract_conf', 'fs=24000', '--feats_extract_conf', 'fmin=0', '--feats_extract_conf', 'fmax=22050', '--feats_extract_conf', 'n_mels=80', '--pitch_extract_conf', 'fs=24000', '--pitch_extract_conf', 'n_fft=2048', '--pitch_extract_conf', 'hop_length=300', '--pitch_extract_conf', 'f0max=810', '--pitch_extract_conf', 'f0min=80', '--train_data_path_and_name_and_type', 'dump/raw/tr_no_dev/text,text,text', '--train_data_path_and_name_and_type', 'dump/raw/tr_no_dev/wav.scp,singing,sound', '--train_data_path_and_name_and_type', 'dump/raw/tr_no_dev/label,label,duration', '--train_data_path_and_name_and_type', 'dump/raw/tr_no_dev/score.scp,score,score', '--train_shape_file', 'exp/svs_stats_raw_phn_None_zh/train/text_shape.phn', '--train_shape_file', 'exp/svs_stats_raw_phn_None_zh/train/singing_shape', '--valid_data_path_and_name_and_type', 'dump/raw/dev/text,text,text', '--valid_data_path_and_name_and_type', 'dump/raw/dev/wav.scp,singing,sound', '--valid_data_path_and_name_and_type', 'dump/raw/dev/label,label,duration', '--valid_data_path_and_name_and_type', 'dump/raw/dev/score.scp,score,score', '--valid_shape_file', 'exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn', '--valid_shape_file', 'exp/svs_stats_raw_phn_None_zh/valid/singing_shape', '--pitch_extract_conf', 'fs=24000', '--pitch_extract_conf', 'n_fft=2048', '--pitch_extract_conf', 'hop_length=300', '--pitch_extract_conf', 'f0max=810', '--pitch_extract_conf', 'f0min=80', '--pitch_normalize_conf', 'stats_file=exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz', '--normalize_conf', 'stats_file=exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz', '--ngpu', '1', '--multiprocessing_distributed', 'True']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data5/arllan/espnet/espnet2/bin/launch.py", line 384, in <module>
+    main()
+  File "/data5/arllan/espnet/espnet2/bin/launch.py", line 375, in main
+    raise RuntimeError(
+RuntimeError: 
+################### The last 1000 lines of exp/svs_train_raw_phn_None_zh/train.log ###################
+# python3 -m espnet2.bin.svs_train --use_preprocessor true --token_type phn --token_list data/token_list/phn_None_zh/tokens.txt --non_linguistic_symbols none --cleaner none --g2p None --fs 24000 --normalize global_mvn --resume true --init_param --ignore_init_mismatch false --fold_length 150 --fold_length 240000 --output_dir exp/svs_train_raw_phn_None_zh --config conf/train.yaml --score_feats_extract syllable_score_feats --score_feats_extract_conf fs=24000 --score_feats_extract_conf n_fft=2048 --score_feats_extract_conf win_length=1200 --score_feats_extract_conf hop_length=300 --feats_extract fbank --feats_extract_conf n_fft=2048 --feats_extract_conf hop_length=300 --feats_extract_conf win_length=1200 --pitch_extract dio --ying_extract None --feats_extract_conf fs=24000 --feats_extract_conf fmin=0 --feats_extract_conf fmax=22050 --feats_extract_conf n_mels=80 --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --train_data_path_and_name_and_type dump/raw/tr_no_dev/text,text,text --train_data_path_and_name_and_type dump/raw/tr_no_dev/wav.scp,singing,sound --train_data_path_and_name_and_type dump/raw/tr_no_dev/label,label,duration --train_data_path_and_name_and_type dump/raw/tr_no_dev/score.scp,score,score --train_shape_file exp/svs_stats_raw_phn_None_zh/train/text_shape.phn --train_shape_file exp/svs_stats_raw_phn_None_zh/train/singing_shape --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,singing,sound --valid_data_path_and_name_and_type dump/raw/dev/label,label,duration --valid_data_path_and_name_and_type dump/raw/dev/score.scp,score,score --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/singing_shape --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --pitch_normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz --normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz --ngpu 1 --multiprocessing_distributed True 
+# Started at Wed Jan  8 05:46:16 UTC 2025
+#
+/data6/arllan/miniconda/envs/espnetenv/espnetenv/bin/python3 /data5/arllan/espnet/espnet2/bin/svs_train.py --use_preprocessor true --token_type phn --token_list data/token_list/phn_None_zh/tokens.txt --non_linguistic_symbols none --cleaner none --g2p None --fs 24000 --normalize global_mvn --resume true --init_param --ignore_init_mismatch false --fold_length 150 --fold_length 240000 --output_dir exp/svs_train_raw_phn_None_zh --config conf/train.yaml --score_feats_extract syllable_score_feats --score_feats_extract_conf fs=24000 --score_feats_extract_conf n_fft=2048 --score_feats_extract_conf win_length=1200 --score_feats_extract_conf hop_length=300 --feats_extract fbank --feats_extract_conf n_fft=2048 --feats_extract_conf hop_length=300 --feats_extract_conf win_length=1200 --pitch_extract dio --ying_extract None --feats_extract_conf fs=24000 --feats_extract_conf fmin=0 --feats_extract_conf fmax=22050 --feats_extract_conf n_mels=80 --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --train_data_path_and_name_and_type dump/raw/tr_no_dev/text,text,text --train_data_path_and_name_and_type dump/raw/tr_no_dev/wav.scp,singing,sound --train_data_path_and_name_and_type dump/raw/tr_no_dev/label,label,duration --train_data_path_and_name_and_type dump/raw/tr_no_dev/score.scp,score,score --train_shape_file exp/svs_stats_raw_phn_None_zh/train/text_shape.phn --train_shape_file exp/svs_stats_raw_phn_None_zh/train/singing_shape --valid_data_path_and_name_and_type dump/raw/dev/text,text,text --valid_data_path_and_name_and_type dump/raw/dev/wav.scp,singing,sound --valid_data_path_and_name_and_type dump/raw/dev/label,label,duration --valid_data_path_and_name_and_type dump/raw/dev/score.scp,score,score --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn --valid_shape_file exp/svs_stats_raw_phn_None_zh/valid/singing_shape --pitch_extract_conf fs=24000 --pitch_extract_conf n_fft=2048 --pitch_extract_conf hop_length=300 --pitch_extract_conf f0max=810 --pitch_extract_conf f0min=80 --pitch_normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz --normalize_conf stats_file=exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz --ngpu 1 --multiprocessing_distributed True
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn'
+Vocabulary size: 63
+/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/librosa/util/decorators.py:88: UserWarning: Empty filters detected in mel frequency basis. Some channels will produce empty responses. Try increasing your sampling rate (and fmax) or reducing n_mels.
+  return f(*args, **kwargs)
+args:Namespace(config='conf/train.yaml', print_config=False, log_level='INFO', drop_last_iter=False, dry_run=False, iterator_type='sequence', valid_iterator_type=None, output_dir='exp/svs_train_raw_phn_None_zh', ngpu=1, seed=0, num_workers=8, num_att_plot=3, dist_backend='nccl', dist_init_method='env://', dist_world_size=None, dist_rank=None, local_rank=0, dist_master_addr=None, dist_master_port=None, dist_launcher=None, multiprocessing_distributed=False, unused_parameters=False, sharded_ddp=False, use_deepspeed=False, deepspeed_config=None, cudnn_enabled=True, cudnn_benchmark=False, cudnn_deterministic=True, use_tf32=False, collect_stats=False, write_collected_feats=False, max_epoch=500, patience=None, val_scheduler_criterion=('valid', 'loss'), early_stopping_criterion=('valid', 'loss', 'min'), best_model_criterion=[['valid', 'loss', 'min'], ['train', 'loss', 'min']], keep_nbest_models=2, nbest_averaging_interval=0, grad_clip=1.0, grad_clip_type=2.0, grad_noise=False, accum_grad=1, no_forward_run=False, resume=True, train_dtype='float32', use_amp=False, log_interval=None, use_matplotlib=True, use_tensorboard=True, create_graph_in_tensorboard=False, use_wandb=False, wandb_project=None, wandb_id=None, wandb_entity=None, wandb_name=None, wandb_model_log_interval=-1, detect_anomaly=False, use_adapter=False, adapter='lora', save_strategy='all', adapter_conf={}, pretrain_path=None, init_param=[], ignore_init_mismatch=False, freeze_param=[], num_iters_per_epoch=None, batch_size=16, valid_batch_size=None, batch_bins=1000000, valid_batch_bins=None, category_sample_size=10, train_shape_file=['exp/svs_stats_raw_phn_None_zh/train/text_shape.phn', 'exp/svs_stats_raw_phn_None_zh/train/singing_shape'], valid_shape_file=['exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn', 'exp/svs_stats_raw_phn_None_zh/valid/singing_shape'], batch_type='sorted', valid_batch_type=None, fold_length=[150, 240000], sort_in_batch='descending', shuffle_within_batch=False, sort_batch='descending', multiple_iterator=False, chunk_length=500, chunk_shift_ratio=0.5, num_cache_chunks=1024, chunk_excluded_key_prefixes=[], chunk_default_fs=None, chunk_max_abs_length=None, chunk_discard_short_samples=True, train_data_path_and_name_and_type=[('dump/raw/tr_no_dev/text', 'text', 'text'), ('dump/raw/tr_no_dev/wav.scp', 'singing', 'sound'), ('dump/raw/tr_no_dev/label', 'label', 'duration'), ('dump/raw/tr_no_dev/score.scp', 'score', 'score')], valid_data_path_and_name_and_type=[('dump/raw/dev/text', 'text', 'text'), ('dump/raw/dev/wav.scp', 'singing', 'sound'), ('dump/raw/dev/label', 'label', 'duration'), ('dump/raw/dev/score.scp', 'score', 'score')], multi_task_dataset=False, allow_variable_data_keys=False, max_cache_size=0.0, max_cache_fd=32, allow_multi_rates=False, valid_max_cache_size=None, exclude_weight_decay=False, exclude_weight_decay_conf={}, optim='adam', optim_conf={'lr': 0.001, 'eps': 1e-06, 'weight_decay': 0.0}, scheduler=None, scheduler_conf={}, token_list=['<blank>', '<unk>', 'SP', 'i', 'AP', 'e', 'y', 'd', 'w', 'sh', 'ai', 'n', 'x', 'j', 'ian', 'u', 'l', 'h', 'b', 'o', 'zh', 'an', 'ou', 'm', 'q', 'z', 'en', 'g', 'ing', 'ei', 'ao', 'ang', 'uo', 'eng', 't', 'a', 'ong', 'ui', 'k', 'f', 'r', 'iang', 'ch', 'v', 'in', 'iao', 'ie', 'iu', 'c', 's', 'van', 'p', 've', 'uan', 'uang', 'ia', 'ua', 'uai', 'un', 'er', 'vn', 'iong', '<sos/eos>'], odim=None, model_conf={}, use_preprocessor=True, token_type='phn', bpemodel=None, non_linguistic_symbols=None, cleaner=None, g2p=None, fs=24000, discrete_token_layers=1, nclusters=1024, score_feats_extract='syllable_score_feats', score_feats_extract_conf={'fs': 24000, 'n_fft': 2048, 'win_length': 1200, 'hop_length': 300}, feats_extract='fbank', feats_extract_conf={'n_fft': 2048, 'hop_length': 300, 'win_length': 1200, 'fs': 24000, 'fmin': 0, 'fmax': 22050, 'n_mels': 80}, normalize='global_mvn', normalize_conf={'stats_file': 'exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz'}, svs='naive_rnn', svs_conf={'midi_dim': 129, 'embed_dim': 512, 'eprenet_conv_layers': 0, 'eprenet_conv_chans': 256, 'eprenet_conv_filts': 3, 'elayers': 3, 'eunits': 512, 'ebidirectional': True, 'midi_embed_integration_type': 'add', 'dlayers': 5, 'dunits': 1024, 'dbidirectional': True, 'postnet_layers': 5, 'postnet_chans': 512, 'postnet_filts': 5, 'use_batch_norm': True, 'reduction_factor': 1, 'eprenet_dropout_rate': 0.2, 'edropout_rate': 0.1, 'ddropout_rate': 0.1, 'postnet_dropout_rate': 0.5, 'init_type': 'pytorch', 'use_masking': True, 'loss_type': 'L1'}, pitch_extract='dio', pitch_extract_conf={'use_token_averaged_f0': False, 'fs': 24000, 'n_fft': 2048, 'hop_length': 300, 'f0max': 810, 'f0min': 80}, pitch_normalize='global_mvn', pitch_normalize_conf={'stats_file': 'exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz'}, ying_extract=None, ying_extract_conf={}, energy_extract=None, energy_extract_conf={}, energy_normalize=None, energy_normalize_conf={}, model_type='svs', model_type_conf={}, required=['output_dir', 'token_list'], version='202409', distributed=False)
+pytorch.version=2.3.0+cu121, cuda.available=True, cudnn.version=8902, cudnn.benchmark=False, cudnn.deterministic=True
+Model structure:
+ESPnetSVSModel(
+  (text_extract): SyllableScoreFeats(win_length=1200, hop_length=300, center=True, )
+  (feats_extract): LogMelFbank(
+    (stft): Stft(n_fft=2048, win_length=1200, hop_length=300, center=True, normalized=False, onesided=True)
+    (logmel): LogMel(sr=24000, n_fft=2048, n_mels=80, fmin=0, fmax=22050, htk=False)
+  )
+  (score_feats_extract): SyllableScoreFeats(win_length=1200, hop_length=300, center=True, )
+  (label_extract): SyllableScoreFeats(win_length=1200, hop_length=300, center=True, )
+  (pitch_extract): Dio()
+  (duration_extract): SyllableScoreFeats(win_length=1200, hop_length=300, center=True, )
+  (normalize): GlobalMVN(stats_file=exp/svs_stats_raw_phn_None_zh/train/feats_stats.npz, norm_means=True, norm_vars=True)
+  (pitch_normalize): GlobalMVN(stats_file=exp/svs_stats_raw_phn_None_zh/train/pitch_stats.npz, norm_means=True, norm_vars=True)
+  (svs): NaiveRNN(
+    (encoder_input_layer): Embedding(63, 512, padding_idx=0)
+    (midi_encoder_input_layer): Embedding(129, 512, padding_idx=0)
+    (encoder): LSTM(512, 512, num_layers=3, batch_first=True, dropout=0.1, bidirectional=True)
+    (midi_encoder): LSTM(512, 512, num_layers=3, batch_first=True, dropout=0.1, bidirectional=True)
+    (midi_projection): Linear(in_features=1024, out_features=1024, bias=True)
+    (decoder): LSTM(512, 512, num_layers=5, batch_first=True, dropout=0.1, bidirectional=True)
+    (feat_out): Linear(in_features=1024, out_features=80, bias=True)
+    (postnet): Postnet(
+      (postnet): ModuleList(
+        (0): Sequential(
+          (0): Conv1d(80, 512, kernel_size=(5,), stride=(1,), padding=(2,), bias=False)
+          (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): Tanh()
+          (3): Dropout(p=0.5, inplace=False)
+        )
+        (1-3): 3 x Sequential(
+          (0): Conv1d(512, 512, kernel_size=(5,), stride=(1,), padding=(2,), bias=False)
+          (1): BatchNorm1d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): Tanh()
+          (3): Dropout(p=0.5, inplace=False)
+        )
+        (4): Sequential(
+          (0): Conv1d(512, 80, kernel_size=(5,), stride=(1,), padding=(2,), bias=False)
+          (1): BatchNorm1d(80, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): Dropout(p=0.5, inplace=False)
+        )
+      )
+    )
+    (criterion): NaiveRNNLoss(
+      (l1_criterion): L1Loss()
+      (mse_criterion): MSELoss()
+    )
+  )
+)
+
+Model summary:
+    Class Name: ESPnetSVSModel
+    Total Number of model parameters: 68.58 M
+    Number of trainable parameters: 68.58 M (100.0%)
+    Size: 274.32 MB
+    Type: torch.float32
+Optimizer:
+Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-06
+    foreach: None
+    fused: None
+    lr: 0.001
+    maximize: False
+    weight_decay: 0.0
+)
+Scheduler: None
+Saving the configuration in exp/svs_train_raw_phn_None_zh/config.yaml
+[train] dataset:
+ESPnetDataset(
+  text: {"path": "dump/raw/tr_no_dev/text", "type": "text"}
+  singing: {"path": "dump/raw/tr_no_dev/wav.scp", "type": "sound"}
+  label: {"path": "dump/raw/tr_no_dev/label", "type": "duration"}
+  score: {"path": "dump/raw/tr_no_dev/score.scp", "type": "score"}
+  preprocess: <espnet2.train.preprocessor.SVSPreprocessor object at 0x7fc040dc4a00>)
+[train] Batch sampler: SortedBatchSampler(N-batch=218, batch_size=16, shape_file=exp/svs_stats_raw_phn_None_zh/train/text_shape.phn, sort_in_batch=descending, sort_batch=descending)
+[train] mini-batch sizes summary: N-batch=218, mean=16.1, min=16, max=17
+[valid] dataset:
+ESPnetDataset(
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  singing: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  label: {"path": "dump/raw/dev/label", "type": "duration"}
+  score: {"path": "dump/raw/dev/score.scp", "type": "score"}
+  preprocess: <espnet2.train.preprocessor.SVSPreprocessor object at 0x7fc043cdb1f0>)
+[valid] Batch sampler: SortedBatchSampler(N-batch=3, batch_size=16, shape_file=exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn, sort_in_batch=descending, sort_batch=descending)
+[valid] mini-batch sizes summary: N-batch=3, mean=16.7, min=16, max=17
+[plot_att] dataset:
+ESPnetDataset(
+  text: {"path": "dump/raw/dev/text", "type": "text"}
+  singing: {"path": "dump/raw/dev/wav.scp", "type": "sound"}
+  label: {"path": "dump/raw/dev/label", "type": "duration"}
+  score: {"path": "dump/raw/dev/score.scp", "type": "score"}
+  preprocess: <espnet2.train.preprocessor.SVSPreprocessor object at 0x7fc040c2ee60>)
+[plot_att] Batch sampler: UnsortedBatchSampler(N-batch=50, batch_size=1, key_file=exp/svs_stats_raw_phn_None_zh/valid/text_shape.phn, 
+[plot_att] mini-batch sizes summary: N-batch=3, mean=1.0, min=1, max=1
+1/500epoch started
+Traceback (most recent call last):
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data5/arllan/espnet/espnet2/bin/svs_train.py", line 22, in <module>
+    main()
+  File "/data5/arllan/espnet/espnet2/bin/svs_train.py", line 18, in main
+    SVSTask.main(cmd=cmd)
+  File "/data5/arllan/espnet/espnet2/tasks/abs_task.py", line 1210, in main
+    cls.main_worker(args)
+  File "/data5/arllan/espnet/espnet2/tasks/abs_task.py", line 1568, in main_worker
+    cls.trainer.run(
+  File "/data5/arllan/espnet/espnet2/train/trainer.py", line 317, in run
+    all_steps_are_invalid = cls.train_one_epoch(
+  File "/data5/arllan/espnet/espnet2/train/trainer.py", line 614, in train_one_epoch
+    retval = model(**batch)
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data5/arllan/espnet/espnet2/svs/espnet_model.py", line 330, in forward
+    return self.svs(**batch)
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data5/arllan/espnet/espnet2/svs/naive_rnn/naive_rnn.py", line 454, in forward
+    l1_loss, l2_loss = self.criterion(
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data6/arllan/miniconda/envs/espnetenv/espnetenv/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data5/arllan/espnet/espnet2/svs/naive_rnn/naive_rnn.py", line 62, in forward
+    after_outs = after_outs.masked_select(masks)
+RuntimeError: The size of tensor a (623) must match the size of tensor b (8) at non-singleton dimension 1
+# Accounting: time=23 threads=1
+# Ended (code 1) at Wed Jan  8 05:46:39 UTC 2025, elapsed time 23 seconds
+

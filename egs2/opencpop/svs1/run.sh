@@ -36,7 +36,7 @@ valid_set=dev
 test_sets="dev test"
 
 # training and inference configuration
-train_config=conf/train.yaml
+train_config=conf/train.yaml #train_visinger2_24k.yaml
 inference_config=conf/decode.yaml
 
 # text related processing arguments
