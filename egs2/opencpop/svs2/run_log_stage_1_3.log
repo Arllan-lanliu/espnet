@@ -1,0 +1,83 @@
+nohup: ignoring input
+2025-01-08T08:08:26 (svs2.sh:249:main) ./svs2.sh --lang zh --stage 1 --stop_stage 9 --local_data_opts --stage 0 --feats_type raw --pitch_extract dio --fs 16000 --fmax 7600 --fmin 80 --n_fft 2048 --n_shift 320 --win_length 1200 --token_type phn --g2p none --cleaner none --preset_layer none --preset_token none --train_config conf/tuning/train_naive_rnn_dp.yaml --inference_config conf/tuning/decode.yaml --gpu_inference true --train_set tr_no_dev --valid_set dev --test_sets test --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --RVQ_layers 2 --kmeans_opts --batch_bins 4800000 --kmeans_feature wavlm_large/6 --multi_token  --mix_type frame --nclusters 128 --RVQ_layers 2 --ngpu 1 --stage 1 --stop_stage 3
+2025-01-08T08:08:27 (svs2.sh:403:main) Stage 1: Data preparation for data/tr_no_dev, data/dev, etc.
+2025-01-08T08:08:28 (data.sh:22:main) local/data.sh --stage 0 --fs 16000 --g2p none
+2025-01-08T08:08:28 (data.sh:37:main) stage 0: Data Download
+2025-01-08T08:08:28 (data.sh:42:main) stage 1: Data preparaion 
+fix_data_dir.sh: kept all 3550 utterances.
+fix_data_dir.sh: old files are kept in data/train/.backup
+fix_data_dir.sh: kept all 206 utterances.
+fix_data_dir.sh: old files are kept in data/test/.backup
+2025-01-08T08:10:26 (data.sh:57:main) stage 2: Held out validation set
+utils/copy_data_dir.sh: copied data from data/train to data/tr_no_dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory data/tr_no_dev
+utils/copy_data_dir.sh: copied data from data/train to data/dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory data/dev
+fix_data_dir.sh: kept 3500 utterances out of 3550
+fix_data_dir.sh: old files are kept in data/tr_no_dev/.backup
+fix_data_dir.sh: kept 50 utterances out of 3550
+fix_data_dir.sh: old files are kept in data/dev/.backup
+2025-01-08T08:10:28 (svs2.sh:421:main) Stage 2: Format wav.scp: data/ -> dump/raw/
+utils/copy_data_dir.sh: copied data from data/tr_no_dev to dump/raw/org/tr_no_dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/org/tr_no_dev
+fix_data_dir.sh: kept all 3500 utterances.
+fix_data_dir.sh: old files are kept in dump/raw/org/tr_no_dev/.backup
+2025-01-08T08:10:29 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format wav --fs 16000 data/tr_no_dev/wav.scp dump/raw/org/tr_no_dev
+2025-01-08T08:10:30 (format_wav_scp.sh:118:main) [info]: without segments
+2025-01-08T08:10:31 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=2s]
+2025-01-08T08:10:31 (format_score_scp.sh:33:main) scripts/audio/format_score_scp.sh --nj 32 --cmd run.pl data/tr_no_dev/score.scp dump/raw/org/tr_no_dev
+2025-01-08T08:10:32 (format_score_scp.sh:92:main) [info]: without segments
+2025-01-08T08:10:33 (format_score_scp.sh:116:main) Successfully finished. [elapsed=2s]
+utils/copy_data_dir.sh: copied data from data/dev to dump/raw/org/dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/org/dev
+fix_data_dir.sh: kept all 50 utterances.
+fix_data_dir.sh: old files are kept in dump/raw/org/dev/.backup
+2025-01-08T08:10:33 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format wav --fs 16000 data/dev/wav.scp dump/raw/org/dev
+2025-01-08T08:10:34 (format_wav_scp.sh:118:main) [info]: without segments
+2025-01-08T08:10:36 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=3s]
+2025-01-08T08:10:36 (format_score_scp.sh:33:main) scripts/audio/format_score_scp.sh --nj 32 --cmd run.pl data/dev/score.scp dump/raw/org/dev
+2025-01-08T08:10:37 (format_score_scp.sh:92:main) [info]: without segments
+2025-01-08T08:10:37 (format_score_scp.sh:116:main) Successfully finished. [elapsed=1s]
+utils/copy_data_dir.sh: copied data from data/test to dump/raw/test
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test
+fix_data_dir.sh: kept all 206 utterances.
+fix_data_dir.sh: old files are kept in dump/raw/test/.backup
+2025-01-08T08:10:38 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 32 --cmd run.pl --audio-format wav --fs 16000 data/test/wav.scp dump/raw/test
+2025-01-08T08:10:38 (format_wav_scp.sh:118:main) [info]: without segments
+2025-01-08T08:10:40 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=2s]
+2025-01-08T08:10:40 (format_score_scp.sh:33:main) scripts/audio/format_score_scp.sh --nj 32 --cmd run.pl data/test/score.scp dump/raw/test
+2025-01-08T08:10:41 (format_score_scp.sh:92:main) [info]: without segments
+2025-01-08T08:10:42 (format_score_scp.sh:116:main) Successfully finished. [elapsed=2s]
+2025-01-08T08:10:42 (svs2.sh:516:main) Stage 3: Remove long/short data: dump/raw/org -> dump/raw
+utils/copy_data_dir.sh: copied data from dump/raw/org/tr_no_dev to dump/raw/tr_no_dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/tr_no_dev
+fix_data_dir.sh: kept all 3500 utterances.
+fix_data_dir.sh: old files are kept in dump/raw/tr_no_dev/.backup
+utils/copy_data_dir.sh: copied data from dump/raw/org/dev to dump/raw/dev
+utils/validate_data_dir.sh: WARNING: you have only one speaker.  This probably a bad idea.
+   Search for the word 'bold' in http://kaldi-asr.org/doc/data_prep.html
+   for more information.
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev
+fix_data_dir.sh: kept all 50 utterances.
+fix_data_dir.sh: old files are kept in dump/raw/dev/.backup
+2025-01-08T08:10:43 (svs2.sh:1494:main) Skip the uploading stage
+2025-01-08T08:10:43 (svs2.sh:1546:main) Skip the uploading to HuggingFace stage
+2025-01-08T08:10:43 (svs2.sh:1549:main) Successfully finished. [elapsed=137s]

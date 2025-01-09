@@ -285,7 +285,8 @@ if [ ${stage} -le 3 ] && [ ${stop_stage} -ge 3 ] && ! [[ " ${skip_stages} " =~ [
         # concatenate scp files
         for layer_idx in $(seq 1 $((RVQ_layers))); do
             tail_="km${nclusters}"
-            if [ ${RVQ_layers} > 1 ]; then
+            #${RVQ_layers} > 1
+            if [ ${RVQ_layers} -gt 1 ]; then
                 tail_="RVQ_$((layer_idx-1))_km${nclusters}"
             fi
             for n in $(seq ${_nj}); do

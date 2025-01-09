@@ -221,6 +221,17 @@ VOXCELEB=
 KSPONSPEECH=
 HIFITTS=downloads
 
+if [[ `hostname` == capri_ll_2224 ]]; then
+    OPENCPOP=/data5/arllan/data/opencpop
+    ONIKU=/data5/arllan/data/other/ONIKU_KURUMI_UTAGOE_DB
+    OFUTON=/data5/arllan/data/other/OFUTON_P_UTAGOE_DB
+    KIRITAN=/data5/arllan/data/other/kiritan_singing
+    NATSUME=/data5/arllan/data/other/Natsume_Singing_DB
+    ITAKO=/data5/arllan/data/other/itako
+    NAMINE=/data5/arllan/data/other/namine_ritsu_utagoe_db
+fi
+
+
 if [[ `hostname` == mars_tyx_2254 ]]; then
     OPENCPOP=/data2/tyx/dataset/opencpop
 fi

@@ -27,7 +27,7 @@ multi_token= # "hubert_large_ll60k_128_6_RVQ_0 wavlm_large_128_6_RVQ_0 wavlm_lar
 mix_type="frame"
 # frame | sequencee
 nclusters=128
-RVQ_layers=2
+RVQ_layers=1 #2
 preset_layer=none
 preset_token=none
 

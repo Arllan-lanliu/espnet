@@ -7,20 +7,15 @@ set -o pipefail
 
 # spectrogram-related arguments
 fs=24000 # 24000 or 441000
-fmin=
-fmax=
-n_fft=
-n_shift=
-win_length=
 
 if [ $fs -eq 24000 ]; then
     fmin=0
-    fmax=22050
+    fmax=12000
     n_fft=2048
-    n_shift=300
-    win_length=1200
+    n_shift=256
+    win_length=2048
 elif [ $fs -eq 44100 ]; then
-    fmin=0
+    fmin=80
     fmax=22050
     n_fft=2048
     n_shift=512
@@ -36,7 +31,7 @@ valid_set=dev
 test_sets="dev test"
 
 # training and inference configuration
-train_config=conf/train.yaml
+train_config=conf/train.yaml #conf/tuning/train_visinger2_24k.yaml 
 inference_config=conf/decode.yaml
 
 # text related processing arguments
