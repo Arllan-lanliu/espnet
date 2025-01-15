@@ -1153,7 +1153,7 @@ if ! "${skip_eval}"; then
         mkdir -p "${svs_exp}/${inference_tag}"; echo "${run_args} --stage 8 \"\$@\"; exit \$?" > "${svs_exp}/${inference_tag}/run.sh"; chmod +x "${svs_exp}/${inference_tag}/run.sh"
 
 
-        for dset in ${test_sets}; do
+        for dset in ${test_sts}; do
             _data="${data_feats}/${dset}"
             _speech_data="${_data}"
             _dir="${svs_exp}/${inference_tag}/${dset}"

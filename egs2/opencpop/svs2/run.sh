@@ -35,8 +35,8 @@ train_set=tr_no_dev
 valid_set=dev
 test_sets="test"
 
-train_config=conf/tuning/train_naive_rnn_dp.yaml
-inference_config=conf/tuning/decode_rnn.yaml
+train_config=conf/tuning/train_toksing.yaml  #conf/tuning/train_naive_rnn_dp.yaml
+inference_config=conf/tuning/decode.yaml
 
 # text related processing arguments
 g2p=none
