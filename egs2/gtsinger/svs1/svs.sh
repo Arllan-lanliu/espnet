@@ -25,76 +25,54 @@ min() {
 SECONDS=0
 
 # General configuration
-stage=1              # Processes starts from the specified stage.
-stop_stage=10000     # Processes is stopped at the specified stage.
-skip_data_prep=false # Skip data preparation stages.
-skip_train=false     # Skip training stages.
-skip_eval=false      # Skip decoding and evaluation stages.
-skip_upload=true     # Skip packing and uploading stages.
-skip_upload_hf=true  # Skip uploading to hugging face stages.
-ngpu=1               # The number of gpus ("0" uses cpu, otherwise use gpu).
-gpu_id=0             # GPU_id, only works when ngpu=1
-num_nodes=1          # The number of nodes.
-nj=32                # The number of parallel jobs.
-inference_nj=32      # The number of parallel jobs in decoding.
-gpu_inference=false  # Whether to perform gpu decoding.
-dumpdir=dump         # Directory to dump features.
-expdir=exp           # Directory to save experiments.
-python=python3       # Specify python to execute espnet2 commands.
+stage=1                 # Processes starts from the specified stage.
+stop_stage=10000        # Processes is stopped at the specified stage.
+skip_data_prep=false    # Skip data preparation stages.
+skip_train=false        # Skip training stages.
+skip_eval=false         # Skip decoding and evaluation stages.
+skip_packing=true       # Skip the packing stage.
+skip_upload_hf=true     # Skip uploading to huggingface stage.
+ngpu=1                  # The number of gpus ("0" uses cpu, otherwise use gpu).
+gpu_id=0                # GPU_id, only works when ngpu=1
+num_nodes=1             # The number of nodes.
+nj=32                   # The number of parallel jobs.
+inference_nj=32         # The number of parallel jobs in decoding.
+gpu_inference=false     # Whether to perform gpu decoding.
+dumpdir=dump            # Directory to dump features.
+expdir=exp              # Directory to save experiments.
+python=python3          # Specify python to execute espnet2 commands.
 
 # Data preparation related
 local_data_opts="" # Options to be passed to local/data.sh.
-
-# Speed perturbation related
-speed_perturb_factors=  # perturbation factors, e.g. "0.9 1.0 1.1" (separated by space).
 
 # Feature extraction related
 feats_type=raw       # Feature type (fbank or stft or raw).
 audio_format=wav     # Audio format: wav, flac, wav.ark, flac.ark  (only in feats_type=raw).
 min_wav_duration=0.1 # Minimum duration in second.
 max_wav_duration=20  # Maximum duration in second.
-use_sid=false        # Whether to use speaker id as the inputs (Need utt2spk in data directory).
+use_sid=true        # Whether to use speaker id as the inputs (Need utt2spk in data directory).
 use_lid=false        # Whether to use language id as the inputs (Need utt2lang in data directory).
 use_xvector=false    # Whether to use x-vector
 feats_extract=fbank        # On-the-fly feature extractor.
 feats_normalize=global_mvn # On-the-fly feature normalizer.
 # Only used for feats_type != raw
-fs=16000          # Sampling rate.
-fmin=80           # Minimum frequency of Mel basis.
-fmax=12000        # Maximum frequency of Mel basis.
+fs=24000          # Sampling rate.
+fmin=0           # Minimum frequency of Mel basis.
+fmax=22050        # Maximum frequency of Mel basis.
 n_mels=80         # The number of mel basis.
-n_fft=1024        # The number of fft points.
-n_shift=256       # The number of shift points.
+n_fft=2048        # The number of fft points.
+n_shift=300       # The number of shift points.
 win_length=null   # Window length.
 score_feats_extract=frame_score_feats # The type of music score feats (frame_score_feats or syllable_score_feats)
 pitch_extract=None
 ying_extract=None
 # Only used for the model using pitch features (e.g. FastSpeech2)
 f0min=80          # Maximum f0 for pitch extraction.
-f0max=800         # Minimum f0 for pitch extraction.
+f0max=810         # Minimum f0 for pitch extraction.
 
 oov="<unk>"         # Out of vocabrary symbol.
 blank="<blank>"     # CTC blank symbol.
 sos_eos="<sos/eos>" # sos and eos symbols.
-
-# Kmeans related
-kmeans_opts=                # The options given to scripts/feats/perform_kmeans.sh
-kmeans_feature="wavlm_large/21" # format: ssl_model_type/layer_idx (e.g. mfcc, hubert_large/21, wavlm_large/21)
-multi_token=None
-RVQ_layers=1
-token_name=""
-discrete_token_layers=1
-mix_type="frame"
-portion=1.0
-nclusters=2000              # The number of clusters for discrete tokenss
-storage_save_mode=true      # Save storage on SSL feature extraction
-                            # If true, feature extraction and kmeans clustering on the fly
-
-# Tokenization related
-oov="<unk>"         # Out of vocabulary symbol.
-blank="<blank>"     # CTC blank symbol
-sos_eos="<sos/eos>" # sos and eos symbole
-token_joint=false       # whether to use a single bpe system for both source and target languages
 
 # Training related
 train_config=""    # Config for training.
@@ -124,13 +102,6 @@ inference_model=valid.loss.best.pth # Model path for decoding.
 vocoder_file=none  # Vocoder parameter file, If set to none, Griffin-Lim will be used.
 download_model=""   # Download a model from Model Zoo and use it for decoding.
 
-# RL related
-prep_rl_data=false
-sample_data=false
-samples_num=10
-train_rl=false
-rl_dir=${dumpdir}/"rl"
-
 # [Task dependent] Set the datadir name created by local/data.sh
 train_set=""     # Name of training set.
 valid_set=""     # Name of validation set used for monitoring/tuning network training.
@@ -144,16 +115,6 @@ lang=noinfo      # The language type of corpus.
 text_fold_length=150   # fold_length for text data.
 singing_fold_length=800 # fold_length for singing data.
 
-nlsyms_txt=none  # Non-linguistic symbol list if existing.
-score_opts=                # The options given to sclite scoring
-local_score_opts=          # The options given to local/score.sh.
-
-# shellcheck disable=SC2034
-word_vocab_size=10000 # Size of word vocabulary.
-
-preset_layer=
-preset_token=
-
 # Upload model related
 hf_repo=
 
@@ -162,20 +123,21 @@ Usage: $0 --train-set "<train_set_name>" --valid-set "<valid_set_name>" --test_s
 
 Options:
     # General configuration
-    --stage          # Processes starts from the specified stage (default="${stage}").
-    --stop_stage     # Processes is stopped at the specified stage (default="${stop_stage}").
-    --skip_data_prep # Skip data preparation stages (default="${skip_data_prep}").
-    --skip_train     # Skip training stages (default="${skip_train}").
-    --skip_eval      # Skip decoding and evaluation stages (default="${skip_eval}").
-    --skip_upload    # Skip packing and uploading stages (default="${skip_upload}").
-    --ngpu           # The number of gpus ("0" uses cpu, otherwise use gpu, default="${ngpu}").
-    --num_nodes      # The number of nodes (default="${num_nodes}").
-    --nj             # The number of parallel jobs (default="${nj}").
-    --inference_nj   # The number of parallel jobs in decoding (default="${inference_nj}").
-    --gpu_inference  # Whether to perform gpu decoding (default="${gpu_inference}").
-    --dumpdir        # Directory to dump features (default="${dumpdir}").
-    --expdir         # Directory to save experiments (default="${expdir}").
-    --python         # Specify python to execute espnet2 commands (default="${python}").
+    --stage              # Processes starts from the specified stage (default="${stage}").
+    --stop_stage         # Processes is stopped at the specified stage (default="${stop_stage}").
+    --skip_data_prep     # Skip data preparation stages (default="${skip_data_prep}").
+    --skip_train         # Skip training stages (default="${skip_train}").
+    --skip_eval          # Skip decoding and evaluation stages (default="${skip_eval}").
+    --skip_packing       # Skip the packing stage (default="${skip_packing}").
+    --skip_upload_hf     # Skip uploading to huggingface stage (default="${skip_upload_hf}").
+    --ngpu               # The number of gpus ("0" uses cpu, otherwise use gpu, default="${ngpu}").
+    --num_nodes          # The number of nodes (default="${num_nodes}").
+    --nj                 # The number of parallel jobs (default="${nj}").
+    --inference_nj       # The number of parallel jobs in decoding (default="${inference_nj}").
+    --gpu_inference      # Whether to perform gpu decoding (default="${gpu_inference}").
+    --dumpdir            # Directory to dump features (default="${dumpdir}").
+    --expdir             # Directory to save experiments (default="${expdir}").
+    --python             # Specify python to execute espnet2 commands (default="${python}").
 
     # Data prep related
     --local_data_opts # Options to be passed to local/data.sh (default="${local_data_opts}").
@@ -261,17 +223,13 @@ fi
 . ./path.sh || exit 1
 . ./cmd.sh
 
-# TODO(Yuning): Check required arguments
-
 # Check feature type
 if [ "${feats_type}" = fbank ]; then
     data_feats="${dumpdir}/fbank"
 elif [ "${feats_type}" = stft ]; then
     data_feats="${dumpdir}/stft"
 elif [ "${feats_type}" = raw ]; then
-    #data_audio="${dumpdir}/audio_raw"
-    data_feats="${dumpdir}/${feats_type}"
-    data_extract="${dumpdir}/extracted"
+    data_feats="${dumpdir}/raw"
 else
     log "${help_message}"
     log "Error: not supported: --feats_type ${feats_type}"
@@ -280,7 +238,7 @@ fi
 
 # Extra files for SVS
 utt_extra_files="label score.scp"
-train_sp_sets=
+
 # Check token list type
 token_listdir="data/token_list/${token_type}"
 if [ "${cleaner}" != none ]; then
@@ -293,53 +251,6 @@ if [ "${lang}" != noinfo ]; then
     token_listdir+="_${lang}"
 fi
 token_list="${token_listdir}/tokens.txt"
-
-mert_url="m-a-p/MERT-v1-330M"
-encodec_url="facebook/encodec_48khz"
-if [ ${kmeans_feature} = "mfcc" ]; then  # MFCC has no layer
-    kmeans_feature_type=$(echo "${kmeans_feature}" | cut -d/ -f1)
-    layer=
-    kmeans_feature_conf="{type=mfcc}"
-else
-    kmeans_feature_type=$(echo "${kmeans_feature}" | cut -d/ -f1)
-    layer=$(echo "${kmeans_feature}" | cut -d/ -f2)
-    # TODO(simpleoier): to support features beyond s3prl
-    if [ ${kmeans_feature_type} = "mert" ]; then
-        kmeans_feature_conf="{type=mert,conf={fs=24000,multilayer_feature=False,layer=${layer},download_path=${mert_url}}}"
-    elif [ ${kmeans_feature_type} = "encodec" ]; then
-        kmeans_feature_conf="{type=encodec,conf={fs=48000,bandwidth=12,multilayer_feature=False,layer=${layer},download_path=${encodec_url}}}"
-    elif [ ${kmeans_feature_type} != "multi" ]; then
-        s3prl_conf="{upstream=${kmeans_feature_type}}"
-        kmeans_feature_conf="{type=s3prl,conf={s3prl_conf=${s3prl_conf},download_dir=ckpt,multilayer_feature=False,layer=${layer}}}"
-    fi
-fi
-if [ ${kmeans_feature_type} = "multi" ]; then
-    token_name=${layer}
-    discrete_token_layers=$(echo "$multi_token" | tr -cd ' ' | wc -c)
-    ((discrete_token_layers++))
-    token_file=token_multi_${token_name}
-else
-    token_name=${kmeans_feature_type}_${nclusters}_${layer}
-    multi_token=${token_name}
-    if [ ${kmeans_feature} = "mfcc" ]; then
-        token_file=token_${kmeans_feature_type}_${nclusters}
-    else
-        token_file=token_${kmeans_feature_type}_${nclusters}_${layer}
-    fi
-    km_dir="${expdir}"/kmeans/$(echo "${kmeans_feature}" | tr "/" "_")_${nclusters}clusters
-fi
-
-if [ "$preset_layer" != none  ]; then
-    discrete_token_layers=${preset_layer}
-fi
-
-if [ "$preset_token" != none ]; then
-    echo "hello: $preset_token"
-    token_file=${preset_token}
-fi
-
-# token_file=token_multi_ad_3rs
-# discrete_token_layers=3
 
 # Set tag for naming of model directory
 if [ -z "${tag}" ]; then
@@ -389,7 +300,6 @@ if [ -z "${svs_stats_dir}" ]; then
         svs_stats_dir+="_${lang}"
     fi
 fi
-
 # The directory used for training commands
 if [ -z "${svs_exp}" ]; then
     svs_exp="${expdir}/svs_${tag}"
@@ -404,8 +314,6 @@ if ! "${skip_data_prep}"; then
         # [Task dependent] Need to create data.sh for new corpus
         local/data.sh ${local_data_opts} --fs "${fs}" --g2p "${g2p}"
     fi
-
-
 
     if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
         # TODO(kamo): Change kaldi-ark to npy or HDF5?
@@ -553,115 +461,9 @@ if ! "${skip_data_prep}"; then
         cat ${srctexts} | awk ' { if( NF != 1 ) print $0; } ' >"${data_feats}/srctexts"
     fi
 
+
     if [ ${stage} -le 4 ] && [ ${stop_stage} -ge 4 ]; then
-        if [ ${kmeans_feature_type} = "encodec" ]; then
-            log "Stage 4a: Extract ${kmeans_feature_type} tokens"
-
-            _cmd="${cuda_cmd} --gpu 1"
-
-            for dset in "${train_set}" "${valid_set}" ${test_sets}; do
-                _dump_dir="${data_extract}/${kmeans_feature_type}/layer${layer}/${dset}"
-
-                utils/copy_data_dir.sh --validate_opts --non-print "${data_feats}/${dset}" "${_dump_dir}"
-
-                mkdir -p "${_dump_dir}"
-                mkdir -p "${_dump_dir}/data"
-                mkdir -p "${_dump_dir}/logdir"
-                nutt=$(<"${_dump_dir}"/wav.scp wc -l)
-                _nj=$((nj<nutt?nj:nutt))
-
-                key_file="${data_feats}/${dset}"/wav.scp
-                split_scps=""
-
-                for n in $(seq ${_nj}); do
-                    split_scps+=" ${_dump_dir}/logdir/wav.${n}.scp"
-                done
-                # shellcheck disable=SC2086
-                utils/split_scp.pl "${key_file}" ${split_scps}
-
-                for n in $(seq ${_nj}); do
-                    awk '(FILENAME==ARGV[1]){utt2num[$1]=$2} (FILENAME==ARGV[2]){print($1, utt2num[$1])}' \
-                        ${data_feats}/${dset}/utt2num_samples ${_dump_dir}/logdir/wav.${n}.scp > ${_dump_dir}/logdir/utt2num_samples.${n}
-                done
-
-                ${_cmd} JOB=1:${_nj} ${_dump_dir}/logdir/dump_features.JOB.log \
-                    ${python} pyscripts/feats/dump_ssl_feature.py \
-                        --feature_conf "'${kmeans_feature_conf}'" \
-                        --use_gpu true \
-                        --in_filetype "sound" \
-                        --out_filetype "mat" \
-                        --write_num_frames "ark,t:${_dump_dir}/data/utt2num_frames.JOB" \
-                        --utt2num_samples "${_dump_dir}/logdir/utt2num_samples.JOB" \
-                        ${batch_bins:+--batch_bins ${batch_bins}} \
-                        "scp:${_dump_dir}/logdir/wav.JOB.scp" \
-                        "ark,t:${_dump_dir}/logdir/pseudo_labels_km${nclusters}.JOB.txt" || exit 1;
-
-                # concatenate scp files
-                for n in $(seq ${_nj}); do
-                    cat "${_dump_dir}"/logdir/pseudo_labels_km${nclusters}.${n}.txt || exit 1;
-                done | sed 's/ \[ \| \]//g' | sort -u > "${_dump_dir}"/pseudo_labels_km${nclusters}.txt || exit 1;
-
-            done
-        elif [ ${kmeans_feature_type} != "multi" ]; then
-            log "Stage 4a: Perform Kmeans using ${kmeans_feature_type} features"
-            nj=1
-            scripts/feats/perform_kmeans.sh \
-                --stage 1 --stop-stage 3 \
-                --train_set "${train_set}" \
-                --dev_set "${valid_set}" \
-                --other_sets "${test_sets} ${train_sp_sets}" \
-                --datadir "${data_feats}" \
-                --featdir "${data_extract}" \
-                --audio_format "${audio_format}" \
-                --feature_type "${kmeans_feature_type}" \
-                --layer "${layer}" \
-                --RVQ_layers "${RVQ_layers}" \
-                --feature_conf "${kmeans_feature_conf}" \
-                --km_dir "${km_dir}" \
-                --portion "${portion}" \
-                --nclusters "${nclusters}" \
-                --storage_save_mode ${storage_save_mode} \
-                --use_gpu true \
-                --nj ${nj} \
-                --cpu_cmd "${train_cmd}" \
-                --cuda_cmd "${cuda_cmd}" \
-                ${kmeans_opts}
-        fi
-        if [ ${kmeans_feature_type} != "multi" ]; then
-            for dset in "${train_set}" "${valid_set}" ${test_sets}; do
-                if [ ${kmeans_feature_type} = "mfcc" ]; then
-                    _dump_dir="${data_extract}/${kmeans_feature_type}/${dset}"
-                else
-                    _dump_dir="${data_extract}/${kmeans_feature_type}/layer${layer}/${dset}"
-                fi
-                token_files=""
-                if [ ${RVQ_layers} = 1 ]; then
-                    cp "${_dump_dir}/pseudo_labels_km${nclusters}.txt" "${data_feats}/${dset}/${token_file}"
-                    token_files="${token_file}"
-                else
-                    for i in $(seq ${RVQ_layers}); do
-                        cp "${_dump_dir}/pseudo_labels_RVQ_$((i-1))_km${nclusters}.txt" "${data_feats}/${dset}/${token_file}_RVQ_$((i-1))"
-                        token_files+="${token_file}_RVQ_$((i-1)) "
-                    done
-                fi
-                # fix_data_dir.sh leaves only utts which exist in all files
-                utils/fix_data_dir.sh --utt_extra_files "${utt_extra_files} ${token_file}" "${data_feats}/${dset}"
-            done
-        else
-            for dset in "${train_set}" "${valid_set}" ${test_sets}; do
-                pyscripts/feats/combine_tokens.py \
-                    --dir "${data_feats}/${dset}/" \
-                    --tokens "${multi_token}" \
-                    --target ${token_file} \
-                    --mix_type ${mix_type}
-                utils/fix_data_dir.sh --utt_extra_files "${utt_extra_files} token_multi_${token_name}" "${data_feats}/${dset}"
-            done
-        fi
-    fi
-
-
-    if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
-        log "Stage 5a: Generate token_list from ${srctexts}"
+        log "Stage 4: Generate token_list from ${srctexts}"
         # "nlsyms_txt" should be generated by local/data.sh if need
 
         # The first symbol in token_list must be "<blank>" and the last must be also sos/eos:
@@ -677,6 +479,7 @@ if ! "${skip_data_prep}"; then
               --add_symbol "${blank}:0" \
               --add_symbol "${oov}:1" \
               --add_symbol "${sos_eos}:-1"
+
     fi
 else
     log "Skip the stages for data preparation"
@@ -685,10 +488,10 @@ fi
 # ========================== Data preparation is done here. ==========================
 
 if ! "${skip_train}"; then
-    if [ ${stage} -le 6 ] && [ ${stop_stage} -ge 6 ]; then
+    if [ ${stage} -le 5 ] && [ ${stop_stage} -ge 5 ]; then
         _train_dir="${data_feats}/${train_set}"
         _valid_dir="${data_feats}/${valid_set}"
-        log "Stage 6: SVS collect stats: train_set=${_train_dir}, valid_set=${_valid_dir}"
+        log "Stage 5: SVS collect stats: train_set=${_train_dir}, valid_set=${_valid_dir}"
 
         _opts=
         if [ -n "${train_config}" ]; then
@@ -735,8 +538,6 @@ if ! "${skip_train}"; then
         _opts+="--energy_extract_conf n_fft=${n_fft} "
         _opts+="--energy_extract_conf hop_length=${n_shift} "
         _opts+="--energy_extract_conf win_length=${win_length} "
-        _opts+="--discrete_token_layers ${discrete_token_layers} "
-        _opts+="--nclusters ${nclusters} "
 
         if [ -n "${teacher_dumpdir}" ]; then
             _teacher_train_dir="${teacher_dumpdir}/${train_set}"
@@ -787,8 +588,8 @@ if ! "${skip_train}"; then
         utils/split_scp.pl "${key_file}" ${split_scps}
 
         # 2. Generate run.sh
-        log "Generate '${svs_stats_dir}/run.sh'. You can resume the process from stage 6 using this script"
-        mkdir -p "${svs_stats_dir}"; echo "${run_args} --stage 6 \"\$@\"; exit \$?" > "${svs_stats_dir}/run.sh"; chmod +x "${svs_stats_dir}/run.sh"
+        log "Generate '${svs_stats_dir}/run.sh'. You can resume the process from stage 5 using this script"
+        mkdir -p "${svs_stats_dir}"; echo "${run_args} --stage 5 \"\$@\"; exit \$?" > "${svs_stats_dir}/run.sh"; chmod +x "${svs_stats_dir}/run.sh"
 
         # 3. Submit jobs
         log "SVS collect_stats started... log: '${_logdir}/stats.*.log'"
@@ -810,12 +611,10 @@ if ! "${skip_train}"; then
                 --train_data_path_and_name_and_type "${_train_dir}/label,label,duration" \
                 --train_data_path_and_name_and_type "${_train_dir}/score.scp,score,score" \
                 --train_data_path_and_name_and_type "${_train_dir}/${_scp},singing,${_type}" \
-                --train_data_path_and_name_and_type "${_train_dir}/${token_file},discrete_token,text_int" \
                 --valid_data_path_and_name_and_type "${_valid_dir}/text,text,text" \
                 --valid_data_path_and_name_and_type "${_valid_dir}/label,label,duration" \
                 --valid_data_path_and_name_and_type "${_valid_dir}/score.scp,score,score" \
                 --valid_data_path_and_name_and_type "${_valid_dir}/${_scp},singing,${_type}" \
-                --valid_data_path_and_name_and_type "${_valid_dir}/${token_file},discrete_token,text_int" \
                 --train_shape_file "${_logdir}/train.JOB.scp" \
                 --valid_shape_file "${_logdir}/valid.JOB.scp" \
                 --output_dir "${_logdir}/stats.JOB" \
@@ -845,11 +644,10 @@ if ! "${skip_train}"; then
     fi
 
 
-
-    if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
+    if [ ${stage} -le 6 ] && [ ${stop_stage} -ge 6 ]; then
         _train_dir="${data_feats}/${train_set}"
         _valid_dir="${data_feats}/${valid_set}"
-        log "Stage 7: SVS Training: train_set=${_train_dir}, valid_set=${_valid_dir}"
+        log "Stage 6: SVS Training: train_set=${_train_dir}, valid_set=${_valid_dir}"
 
         _opts=
         if [ -n "${train_config}" ]; then
@@ -928,7 +726,6 @@ if ! "${skip_train}"; then
                 _opts+="--train_data_path_and_name_and_type ${_train_dir}/${_scp},singing,${_type} "
                 _opts+="--train_data_path_and_name_and_type ${_train_dir}/label,label,duration "
                 _opts+="--train_data_path_and_name_and_type ${_train_dir}/score.scp,score,score "
-                _opts+="--train_data_path_and_name_and_type ${_train_dir}/${token_file},discrete_token,text_int "
                 # echo "svs_stats_dir: ${svs_stats_dir}"
 
                 _opts+="--train_shape_file ${svs_stats_dir}/train/text_shape.${token_type} "
@@ -938,7 +735,6 @@ if ! "${skip_train}"; then
             _opts+="--valid_data_path_and_name_and_type ${_valid_dir}/${_scp},singing,${_type} "
             _opts+="--valid_data_path_and_name_and_type ${_valid_dir}/label,label,duration "
             _opts+="--valid_data_path_and_name_and_type ${_valid_dir}/score.scp,score,score "
-            _opts+="--valid_data_path_and_name_and_type ${_valid_dir}/${token_file},discrete_token,text_int "
             _opts+="--valid_shape_file ${svs_stats_dir}/valid/text_shape.${token_type} "
             _opts+="--valid_shape_file ${svs_stats_dir}/valid/singing_shape "
         else
@@ -1068,8 +864,8 @@ if ! "${skip_train}"; then
             _opts+="--normalize_conf stats_file=${svs_stats_dir}/train/feats_stats.npz "
         fi
 
-        log "Generate '${svs_exp}/run.sh'. You can resume the process from stage 7 using this script"
-        mkdir -p "${svs_exp}"; echo "${run_args} --stage 7 \"\$@\"; exit \$?" > "${svs_exp}/run.sh"; chmod +x "${svs_exp}/run.sh"
+        log "Generate '${svs_exp}/run.sh'. You can resume the process from stage 6 using this script"
+        mkdir -p "${svs_exp}"; echo "${run_args} --stage 6 \"\$@\"; exit \$?" > "${svs_exp}/run.sh"; chmod +x "${svs_exp}/run.sh"
 
         # NOTE(kamo): --fold_length is used only if --batch_type=folded and it's ignored in the other case
 
@@ -1079,20 +875,6 @@ if ! "${skip_train}"; then
             jobname="$(basename ${svs_exp})"
         else
             jobname="${svs_exp}/train.log"
-        fi
-
-        _opts+="--discrete_token_layers ${discrete_token_layers} "
-        _opts+="--nclusters ${nclusters} "
-        
-        if "${train_rl}"; then
-            _opts+="--train_data_path_and_name_and_type ${rl_dir}/${train_set}/neg_samples_idx,neg_idx,npy "
-            _opts+="--train_data_path_and_name_and_type ${rl_dir}/${train_set}/pos_samples_idx,pos_idx,npy "
-            _opts+="--train_shape_file ${rl_dir}/${train_set}/pos_idx_shape "
-            _opts+="--train_shape_file ${rl_dir}/${train_set}/neg_idx_shape "
-            _opts+="--valid_data_path_and_name_and_type ${rl_dir}/${valid_set}/pos_samples_idx,pos_idx,npy "
-            _opts+="--valid_data_path_and_name_and_type ${rl_dir}/${valid_set}/neg_samples_idx,neg_idx,npy "
-            _opts+="--valid_shape_file ${rl_dir}/${valid_set}/pos_idx_shape "
-            _opts+="--valid_shape_file ${rl_dir}/${valid_set}/neg_idx_shape "
         fi
 
         # shellcheck disable=SC2086
@@ -1126,8 +908,8 @@ else
 fi
 
 if ! "${skip_eval}"; then
-    if [ ${stage} -le 8 ] && [ ${stop_stage} -ge 8 ]; then
-        log "Stage 8: Decoding: training_dir=${svs_exp}"
+    if [ ${stage} -le 7 ] && [ ${stop_stage} -ge 7 ]; then
+        log "Stage 7: Decoding: training_dir=${svs_exp}"
 
         if ${gpu_inference}; then
             _cmd="${cuda_cmd}"
@@ -1167,15 +949,17 @@ if ! "${skip_eval}"; then
             _type=sound
         fi
 
-        log "Generate '${svs_exp}/${inference_tag}/run.sh'. You can resume the process from stage 8 using this script"
-        mkdir -p "${svs_exp}/${inference_tag}"; echo "${run_args} --stage 8 \"\$@\"; exit \$?" > "${svs_exp}/${inference_tag}/run.sh"; chmod +x "${svs_exp}/${inference_tag}/run.sh"
+        log "Generate '${svs_exp}/${inference_tag}/run.sh'. You can resume the process from stage 7 using this script"
+        mkdir -p "${svs_exp}/${inference_tag}"; echo "${run_args} --stage 7 \"\$@\"; exit \$?" > "${svs_exp}/${inference_tag}/run.sh"; chmod +x "${svs_exp}/${inference_tag}/run.sh"
 
 
-        for dset in ${test_sts}; do
-            _data="${data_feats}/${dset}"
-            _speech_data="${_data}"
-            _dir="${svs_exp}/${inference_tag}/${dset}"
-            _logdir="${_dir}/log"
+        # test_sets = "dev eval"
+        for dset in ${test_sets}; do
+            _data="${data_feats}/${dset}" #dump/raw/dev
+            _speech_data="${_data}"       #dump/raw/dev
+            _dir="${svs_exp}/${inference_tag}/${dset}" #exp/svs_train_raw_phn_None_zh/decode_latest/dev
+            _logdir="${_dir}/log"         #exp/svs_train_raw_phn_None_zh/decode_latest/dev/log
+
             mkdir -p "${_logdir}"
 
             _ex_opts=""
@@ -1207,22 +991,6 @@ if ! "${skip_eval}"; then
                 _ex_opts+="--data_path_and_name_and_type ${_data}/utt2lid,lids,text_int "
             fi
 
-            # Add discrete config
-            _opts+="--discrete_token_layers ${discrete_token_layers} "
-            _opts+="--mix_type ${mix_type} "
-
-            # Add RL config
-            _ex_opts+="--prep_rl_data ${prep_rl_data} "
-            if "${prep_rl_data}"; then
-                if "${sample_data}"; then
-                    # RL data prep substaeg 1
-                    _ex_opts+="--sample_data ${sample_data} "
-                    _ex_opts+="--samples_num ${samples_num} "
-                else
-                    # RL data prep substaeg 2
-                    _ex_opts+="--data_path_and_name_and_type ${_dir}/samples_tmp/samples_idx.scp,samples,npy "
-                fi
-            fi
 
             # 0. Copy feats_type
             cp "${_data}/feats_type" "${_dir}/feats_type"
@@ -1247,114 +1015,65 @@ if ! "${skip_eval}"; then
                     --data_path_and_name_and_type "${_data}/label,label,duration" \
                     --data_path_and_name_and_type "${_data}/score.scp,score,score" \
                     --data_path_and_name_and_type "${_data}/${_scp},singing,${_type}" \
-                    --data_path_and_name_and_type "${_data}/${token_file},discrete_token,text_int" \
                     --key_file "${_logdir}"/keys.JOB.scp \
                     --model_file "${svs_exp}"/"${inference_model}" \
                     --train_config "${svs_exp}"/config.yaml \
                     --output_dir "${_logdir}"/output.JOB \
                     --vocoder_checkpoint "${vocoder_file}" \
+                    --svs_task "${svs_task}" \
                     ${_opts} ${_ex_opts} ${inference_args}
 
             # 4. Concatenates the output files from each jobs
-            if "${prep_rl_data}"; then
-                if "${sample_data}"; then
-                    # rl data preparation substage 1 (generate samples_tmp/samples_*.scp)
-                    mkdir -p "${_dir}"/samples_tmp
-                    for i in $(seq "${_nj}"); do
-                        cat "${_logdir}/output.${i}/samples_tmp/samples_idx.scp"
-                    done | LC_ALL=C sort -k1 > "${_dir}/samples_tmp/samples_idx.scp"
-                    for i in $(seq "${_nj}"); do
-                        cat "${_logdir}/output.${i}/samples_tmp/samples_shape"
-                    done | LC_ALL=C sort -k1 > "${_dir}/samples_tmp/samples_shape"
-                else
-                    # rl data preparation substage 2 (generate samples)
-                    _tgt_path="${rl_dir}/${dset}/samples"
-                    mkdir -p ${_tgt_path}
-                    for i in $(seq "${_nj}"); do
-                        while read -r key src_path; do
-                            echo "${key} $(pwd)/${src_path}"
-                        done < "${_logdir}/output.${i}/samples/samples_idx.scp"
-                    done | LC_ALL=C sort -k1 > "${_tgt_path}/samples_idx.scp"
-                    mkdir -p "${_tgt_path}"/wavs
-                    for i in $(seq "${_nj}"); do
-                        while read -r key src_wav; do
-                            filename=$(basename "${src_wav}")
-                            tgt_wav="$(pwd)/${_tgt_path}/wavs/${filename}"
-                            if [ -e ${src_wav} ]; then
-                                mv "${src_wav}" "${tgt_wav}"
-                            fi
-                            echo "${key} ${tgt_wav}"
-                        done < "${_logdir}/output.${i}/wav/wav.scp"
-                    done | LC_ALL=C sort -k1 > "${_tgt_path}/wav.scp"
-                    # for i in $(seq "${_nj}"); do
-                    #     rm -rf "${_logdir}/output.${i}"/wav
-                    # done
-                fi
-            else
-                mkdir -p "${_dir}"/{norm,denorm,wav}
+            mkdir -p "${_dir}"/{norm,denorm,wav}
 
-                if [ ${svs_task} == svs ]; then
-                    for i in $(seq "${_nj}"); do
-                        cat "${_logdir}/output.${i}/norm/feats.scp"
-                    done | LC_ALL=C sort -k1 > "${_dir}/norm/feats.scp"
-                    #for i in $(seq "${_nj}"); do
-                    #    cat "${_logdir}/output.${i}/denorm/feats.scp"
-                    #done | LC_ALL=C sort -k1 > "${_dir}/denorm/feats.scp"
-                fi
+            if [ ${svs_task} == svs ]; then
+                for i in $(seq "${_nj}"); do
+                    cat "${_logdir}/output.${i}/norm/feats.scp"
+                done | LC_ALL=C sort -k1 > "${_dir}/norm/feats.scp"
+                for i in $(seq "${_nj}"); do
+                    cat "${_logdir}/output.${i}/denorm/feats.scp"
+                done | LC_ALL=C sort -k1 > "${_dir}/denorm/feats.scp"
+            fi
 
+            for i in $(seq "${_nj}"); do
+                 cat "${_logdir}/output.${i}/speech_shape/speech_shape"
+            done | LC_ALL=C sort -k1 > "${_dir}/speech_shape"
+            for i in $(seq "${_nj}"); do
+                mv -u "${_logdir}/output.${i}"/wav/*.wav "${_dir}"/wav
+                rm -rf "${_logdir}/output.${i}"/wav
+            done
+            if [ -e "${_logdir}/output.${_nj}/att_ws" ]; then
+                mkdir -p "${_dir}"/att_ws
                 for i in $(seq "${_nj}"); do
-                    cat "${_logdir}/output.${i}/speech_shape/speech_shape"
-                done | LC_ALL=C sort -k1 > "${_dir}/speech_shape"
+                     cat "${_logdir}/output.${i}/durations/durations"
+                done | LC_ALL=C sort -k1 > "${_dir}/durations"
                 for i in $(seq "${_nj}"); do
-                    mv -u "${_logdir}/output.${i}"/wav/*.wav "${_dir}"/wav
-                    rm -rf "${_logdir}/output.${i}"/wav
+                     cat "${_logdir}/output.${i}/focus_rates/focus_rates"
+                done | LC_ALL=C sort -k1 > "${_dir}/focus_rates"
+                for i in $(seq "${_nj}"); do
+                    mv -u "${_logdir}/output.${i}"/att_ws/*.png "${_dir}"/att_ws
+                    rm -rf "${_logdir}/output.${i}"/att_ws
                 done
-                if [ -e "${_logdir}/output.${_nj}/att_ws" ]; then
-                    mkdir -p "${_dir}"/att_ws
-                    for i in $(seq "${_nj}"); do
-                        cat "${_logdir}/output.${i}/durations/durations"
-                    done | LC_ALL=C sort -k1 > "${_dir}/durations"
-                    for i in $(seq "${_nj}"); do
-                        cat "${_logdir}/output.${i}/focus_rates/focus_rates"
-                    done | LC_ALL=C sort -k1 > "${_dir}/focus_rates"
-                    for i in $(seq "${_nj}"); do
-                        mv -u "${_logdir}/output.${i}"/att_ws/*.png "${_dir}"/att_ws
-                        rm -rf "${_logdir}/output.${i}"/att_ws
-                    done
-                fi
-                if [ -e "${_logdir}/output.${_nj}/probs" ]; then
-                    mkdir -p "${_dir}"/probs
-                    for i in $(seq "${_nj}"); do
-                        mv -u "${_logdir}/output.${i}"/probs/*.png "${_dir}"/probs
-                        rm -rf "${_logdir}/output.${i}"/probs
-                    done
-                fi
+            fi
+            if [ -e "${_logdir}/output.${_nj}/probs" ]; then
+                mkdir -p "${_dir}"/probs
+                for i in $(seq "${_nj}"); do
+                    mv -u "${_logdir}/output.${i}"/probs/*.png "${_dir}"/probs
+                    rm -rf "${_logdir}/output.${i}"/probs
+                done
             fi
         done
     fi
 
-    if [ ${stage} -le 9 ] && [ ${stop_stage} -ge 9 ]; then
-        log "Stage 9: Scoring"
+    if [ ${stage} -le 8 ] && [ ${stop_stage} -ge 8 ]; then
+        log "Stage 8: Scoring"
 
-        for dset in ${test_sets}; do
-            _data="${data_feats}/${dset}"
-            _gt_wavscp="${_data}/wav.scp"
+        for dset in ${test_sets}; do 
+            _data="${data_feats}/${dset}" 
+            _gt_wavscp="${_data}/wav.scp"  
             _dir="${svs_exp}/${inference_tag}/${dset}"
-            _gen_wavdir="${_dir}/wav"
-            _gt_token_file="${_data}/${token_file}"
-            _gen_token_scp="${_dir}/norm/feats.scp"
+            _gen_wavdir="${_dir}/wav"       
 
-            # Objective Evaluation - Accuracy
-            log "Begin Scoring for token accuracy on ${dset}, results are written under ${_dir}/Accuracy_res"
-
-            mkdir -p "${_dir}/MCD_res"
-            ${python} pyscripts/utils/evaluate_token_accuracy.py \
-                ${_gen_token_scp} \
-                ${_gt_token_file} \
-                "${multi_token}" \
-                --outdir "${_dir}/Accuracy_res" \
-                --discrete_token_layers ${discrete_token_layers} \
-                --mix_type ${mix_type}
 
             # Objective Evaluation - MCD
             log "Begin Scoring for MCD metrics on ${dset}, results are written under ${_dir}/MCD_res"
@@ -1399,107 +1118,58 @@ else
 fi
 
 packed_model="${svs_exp}/${svs_exp##*/}_${inference_model%.*}.zip"
-if [ ${stage} -le 10 ] && [ ${stop_stage} -ge 10 ]; then
-    log "Stage 10: Pack model: ${packed_model}"
+if ! "${skip_packing}"; then
+    if [ ${stage} -le 9 ] && [ ${stop_stage} -ge 9 ]; then
+        log "Stage 9: Pack model: ${packed_model}"
 
-    _opts=""
-    if [ -e "${svs_stats_dir}/train/feats_stats.npz" ]; then
-        _opts+=" --option ${svs_stats_dir}/train/feats_stats.npz"
-    fi
-    if [ -e "${svs_stats_dir}/train/pitch_stats.npz" ]; then
-        _opts+=" --option ${svs_stats_dir}/train/pitch_stats.npz"
-    fi
-    if [ -e "${svs_stats_dir}/train/energy_stats.npz" ]; then
-        _opts+=" --option ${svs_stats_dir}/train/energy_stats.npz"
-    fi
-    if "${use_xvector}"; then
-        for dset in "${train_set}" ${test_sets}; do
-            _opts+=" --option ${dumpdir}/xvector/${dset}/spk_xvector.scp"
-            _opts+=" --option ${dumpdir}/xvector/${dset}/spk_xvector.ark"
-        done
-    fi
-    if "${use_sid}"; then
-        _opts+=" --option ${data_feats}/org/${train_set}/spk2sid"
-    fi
-    if "${use_lid}"; then
-        _opts+=" --option ${data_feats}/org/${train_set}/lang2lid"
-    fi
-    ${python} -m espnet2.bin.pack svs \
-        --train_config "${svs_exp}"/config.yaml \
-        --model_file "${svs_exp}"/"${inference_model}" \
-        --option "${svs_exp}"/images  \
-        --outpath "${packed_model}" \
-        ${_opts}
-
-    # NOTE(kamo): If you'll use packed model to inference in this script, do as follows
-    #   % unzip ${packed_model}
-    #   % ./run.sh --stage 9 --svs_exp $(basename ${packed_model} .zip) --inference_model pretrain.pth
-fi
-
-if ! "${skip_upload}"; then
-    if [ ${stage} -le 11 ] && [ ${stop_stage} -ge 11 ]; then
-        log "Stage 11: Upload model to Zenodo: ${packed_model}"
-
-        # To upload your model, you need to do:
-        #   1. Signup to Zenodo: https://zenodo.org/
-        #   2. Create access token: https://zenodo.org/account/settings/applications/tokens/new/
-        #   3. Set your environment: % export ACCESS_TOKEN="<your token>"
-
-        if command -v git &> /dev/null; then
-            _creator_name="$(git config user.name)"
-            _checkout="
-git checkout $(git show -s --format=%H)"
-        else
-            _creator_name="$(whoami)"
-            _checkout=""
+        _opts=""
+        if [ -e "${svs_stats_dir}/train/feats_stats.npz" ]; then
+            _opts+=" --option ${svs_stats_dir}/train/feats_stats.npz"
         fi
-        # /some/where/espnet/egs2/foo/svs2/ -> foo/svs2
-        _task="$(pwd | rev | cut -d/ -f1-2 | rev)"
-        # foo/svs2 -> foo
-        _corpus="${_task%/*}"
-        _model_name="${_creator_name}/${_corpus}_$(basename ${packed_model} .zip)"
+        if [ -e "${svs_stats_dir}/train/pitch_stats.npz" ]; then
+            _opts+=" --option ${svs_stats_dir}/train/pitch_stats.npz"
+        fi
+        if [ -e "${svs_stats_dir}/train/energy_stats.npz" ]; then
+            _opts+=" --option ${svs_stats_dir}/train/energy_stats.npz"
+        fi
+        if "${use_xvector}"; then
+            for dset in "${train_set}" ${test_sets}; do
+                _opts+=" --option ${dumpdir}/xvector/${dset}/spk_xvector.scp"
+                _opts+=" --option ${dumpdir}/xvector/${dset}/spk_xvector.ark"
+            done
+        fi
+        if "${use_sid}"; then
+            _opts+=" --option ${data_feats}/org/${train_set}/spk2sid"
+        fi
+        if "${use_lid}"; then
+            _opts+=" --option ${data_feats}/org/${train_set}/lang2lid"
+        fi
+        ${python} -m espnet2.bin.pack svs \
+            --train_config "${svs_exp}"/config.yaml \
+            --model_file "${svs_exp}"/"${inference_model}" \
+            --option "${svs_exp}"/images  \
+            --outpath "${packed_model}" \
+            ${_opts}
 
-        # Generate description file
-        cat << EOF > "${svs_exp}"/description
-This model was trained by ${_creator_name} using ${_task} recipe in <a href="https://github.com/espnet/espnet/">espnet</a>.
-<p>&nbsp;</p>
-<ul>
-<li><strong>Python API</strong><pre><code class="language-python">See https://github.com/espnet/espnet_model_zoo</code></pre></li>
-<li><strong>Evaluate in the recipe</strong><pre>
-<code class="language-bash">git clone https://github.com/espnet/espnet
-cd espnet${_checkout}
-pip install -e .
-cd $(pwd | rev | cut -d/ -f1-3 | rev)
-# Download the model file here
-./run.sh --skip_data_prep false --skip_train true --download_model ${_model_name}</code>
-</pre></li>
-<li><strong>Config</strong><pre><code>$(cat "${svs_exp}"/config.yaml)</code></pre></li>
-</ul>
-EOF
-
-        # NOTE(kamo): The model file is uploaded here, but not published yet.
-        #   Please confirm your record at Zenodo and publish by yourself.
-
-        # shellcheck disable=SC2086
-        espnet_model_zoo_upload \
-            --file "${packed_model}" \
-            --title "ESPnet2 pretrained model, ${_model_name}, fs=${fs}, lang=${lang}" \
-            --description_file "${svs_exp}"/description \
-            --creator_name "${_creator_name}" \
-            --license "CC-BY-4.0" \
-            --use_sandbox false \
-            --publish false
+        # NOTE(kamo): If you'll use packed model to inference in this script, do as follows
+        #   % unzip ${packed_model}
+        #   % ./run.sh --stage 9 --svs_exp $(basename ${packed_model} .zip) --inference_model pretrain.pth
     fi
 else
-    log "Skip the uploading stage"
+    log "Skip the packing stage"
 fi
 
 if ! "${skip_upload_hf}"; then
-    if [ ${stage} -le 12 ] && [ ${stop_stage} -ge 12 ]; then
+    if [ ${stage} -le 10 ] && [ ${stop_stage} -ge 10 ]; then
         [ -z "${hf_repo}" ] && \
             log "ERROR: You need to setup the variable hf_repo with the name of the repository located at HuggingFace" && \
             exit 1
-        log "Stage 12: Upload model to HuggingFace: ${hf_repo}"
+        log "Stage 10: Upload model to HuggingFace: ${hf_repo}"
+
+        if [ ! -f "${packed_model}" ]; then
+            log "ERROR: ${packed_model} does not exist. Please run stage 9 first."
+            exit 1
+        fi
 
         gitlfs=$(git lfs --version 2> /dev/null || true)
         [ -z "${gitlfs}" ] && \
@@ -1516,9 +1186,9 @@ if ! "${skip_upload_hf}"; then
             _creator_name="$(whoami)"
             _checkout=""
         fi
-        # /some/where/espnet/egs2/foo/svs2/ -> foo/svs2
+        # /some/where/espnet/egs2/foo/svs1/ -> foo/svs1
         _task="$(pwd | rev | cut -d/ -f2 | rev)"
-        # foo/svs2 -> foo
+        # foo/svs1 -> foo
         _corpus="${_task%/*}"
         _model_name="${_creator_name}/${_corpus}_$(basename ${packed_model} .zip)"
 
