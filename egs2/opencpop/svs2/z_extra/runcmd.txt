@@ -1,0 +1,1 @@
+nohup ./run_rl.sh > z_extra/run_rl_log/run_rl_log_1.log 2>&1 &

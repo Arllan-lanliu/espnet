@@ -20,8 +20,10 @@ win_length=1200
 score_feats_extract=syllable_score_feats   # frame_score_feats | syllable_score_feats
 
 # discrete related
-kmeans_feature="multi/hubert_large_6+wavlm_large_6+wavlm_large_23" # split with '/', e.g. "multi/wavlm6+large6", "wavlm_large/6" | "encodec/1" | "xls_r_300m/6", use model_type/layer_index
-multi_token="hubert_large_ll60k_128_6_RVQ_0 wavlm_large_128_6_RVQ_0 wavlm_large_128_23_RVQ_0" # split with ' '
+#kmeans_feature="multi/hubert_large_6+wavlm_large_6+wavlm_large_23" # split with '/', e.g. "multi/wavlm6+large6", "wavlm_large/6" | "encodec/1" | "xls_r_300m/6", use model_type/layer_index
+#multi_token="hubert_large_ll60k_128_6_RVQ_0 wavlm_large_128_6_RVQ_0 wavlm_large_128_23_RVQ_0" # split with ' '
+kmeans_feature="wavlm_large/6"
+multi_token="token_wavlm_large_128_6_RVQ_0 token_wavlm_large_128_6_RVQ_1"
 mix_type="frame" # frame | sequencee
 nclusters=128
 RVQ_layers=2
@@ -56,7 +58,8 @@ use_refsvs=false
 
 pretrain_checkpoint="exp/svs_train_toksing_raw_phn_none_zh/valid.loss.best.pth"
 
-versa_path="/data7/tyx/versa"
+versa_path="/data5/arllan/versa"
+vocoder_file="/data5/arllan/espnet/egs2/opencpop/svs2/z_extra/checkpoint-250000steps.pkl"
 
 stage=1
 stop_stage=3

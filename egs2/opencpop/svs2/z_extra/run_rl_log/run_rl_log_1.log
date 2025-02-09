@@ -1,0 +1,17 @@
+nohup: ignoring input
+2025-01-22T10:24:59 (run_rl.sh:69:main) Stage 1: Prepare dataset for training
+2025-01-22T10:24:59 (run_rl.sh:76:main) substage 1.1: get sample idx
+2025-01-22T10:24:59 (svs2.sh:249:main) ./svs2.sh --lang zh --stage 8 --stop_stage 8 --local_data_opts --stage 0 --feats_type raw --pitch_extract dio --fs 16000 --fmax 7600 --fmin 80 --n_fft 2048 --n_shift 320 --win_length 1200 --token_type phn --g2p none --cleaner none --preset_layer none --preset_token none --train_config conf/tuning/train_toksing.yaml --inference_config conf/tuning/decode.yaml --gpu_inference true --train_set tr_no_dev --valid_set dev --test_sets dev tr_no_dev --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --RVQ_layers 2 --kmeans_opts --batch_bins 4800000 --kmeans_feature wavlm_large/6 --multi_token token_wavlm_large_128_6_RVQ_0 token_wavlm_large_128_6_RVQ_1 --mix_type frame --nclusters 128 --RVQ_layers 2 --ngpu 1 --prep_rl_data true --sample_data true --samples_num 10
+2025-01-22T10:25:00 (svs2.sh:1130:main) Stage 8: Decoding: training_dir=exp/svs_train_toksing_raw_phn_none_zh
+2025-01-22T10:25:00 (svs2.sh:1170:main) Generate 'exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/run.sh'. You can resume the process from stage 8 using this script
+2025-01-22T10:25:00 (svs2.sh:1241:main) Decoding started... log: 'exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/dev/log/svs_inference.*.log'
+2025-01-22T10:26:26 (svs2.sh:1241:main) Decoding started... log: 'exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/tr_no_dev/log/svs_inference.*.log'
+2025-01-22T10:28:27 (svs2.sh:1494:main) Skip the uploading stage
+2025-01-22T10:28:27 (svs2.sh:1546:main) Skip the uploading to HuggingFace stage
+2025-01-22T10:28:27 (svs2.sh:1549:main) Successfully finished. [elapsed=208s]
+2025-01-22T10:28:27 (run_rl.sh:121:main) substage 1.2: generate wav for corresponding idx
+2025-01-22T10:28:27 (svs2.sh:249:main) ./svs2.sh --lang zh --stage 8 --stop_stage 8 --local_data_opts --stage 0 --feats_type raw --pitch_extract dio --fs 16000 --fmax 7600 --fmin 80 --n_fft 2048 --n_shift 320 --win_length 1200 --token_type phn --g2p none --cleaner none --preset_layer none --preset_token none --train_config conf/tuning/train_toksing.yaml --inference_config conf/tuning/decode.yaml --gpu_inference true --train_set tr_no_dev --valid_set dev --test_sets dev tr_no_dev --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --RVQ_layers 2 --kmeans_opts --batch_bins 4800000 --kmeans_feature wavlm_large/6 --multi_token token_wavlm_large_128_6_RVQ_0 token_wavlm_large_128_6_RVQ_1 --mix_type frame --nclusters 128 --RVQ_layers 2 --ngpu 1 --prep_rl_data true --sample_data false --samples_num 10
+2025-01-22T10:28:28 (svs2.sh:1130:main) Stage 8: Decoding: training_dir=exp/svs_train_toksing_raw_phn_none_zh
+2025-01-22T10:28:28 (svs2.sh:1170:main) Generate 'exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/run.sh'. You can resume the process from stage 8 using this script
+2025-01-22T10:28:28 (svs2.sh:1241:main) Decoding started... log: 'exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/dev/log/svs_inference.*.log'
+run.pl: 32 / 32 failed, log is in exp/svs_train_toksing_raw_phn_none_zh/decode_valid.loss.best/dev/log/svs_inference.*.log
