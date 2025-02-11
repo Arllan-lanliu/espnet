@@ -1,0 +1,14 @@
+nvidia-smi
+
+#1-4
+nohup ./run.sh --stage 1 --stop_stage 4 > run_log_stage_1_4.log 2>&1 &
+
+#5
+nohup env  CUDA_VISIBLE_DEVICES=1 ./run.sh --stage 5 --stop_stage 5 --svs_task gan_svs --pitch_extract dio --feats_extract fbank --feats_normalize none --score_feats_extract syllable_score_feats --inference_model latest.pth --write_collected_feats true > run_log_stage_5.log 2>&1 &
+
+#6
+nohup env  CUDA_VISIBLE_DEVICES=3 ./run.sh --stage 6 --stop_stage 6 --svs_task gan_svs --pitch_extract dio --feats_extract fbank --feats_normalize none --score_feats_extract syllable_score_feats --inference_model latest.pth --write_collected_feats true > run_log_stage_6.log 2>&1 &
+
+#7-end
+nohup env  CUDA_VISIBLE_DEVICES=1 ./run.sh --stage 7 --svs_task gan_svs --pitch_extract dio --feats_extract fbank --feats_normalize none --score_feats_extract syllable_score_feats --inference_model latest.pth --write_collected_feats true > run_log_stage_7__.log 2>&1 &
+

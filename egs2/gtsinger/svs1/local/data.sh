@@ -64,5 +64,4 @@ fi
 
 log "Successfully finished. [elapsed=${SECONDS}s]"
 
-# ./run.sh --stage 1 --stop_stage 1
 
