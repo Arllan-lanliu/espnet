@@ -31,42 +31,28 @@ TEST_LIST = [
 
 yue_song_list = []   #歌曲列表，在这些歌曲中 "乐" 发音为 "yue"，标记为 "ve"
 unique_label_dict = {}  #一些特殊的标注需要重新处理
-unique_extra_info_dict = {}
 
 
-def pre_unique_data(yue_songs_file, unique_label_file, unique_extra_info_file):
+def pre_unique_data(yue_songs_file, unique_label_file):
     #yue_songs_list = ["Chinese/ZH-Tenor-1/Vibrato/我真的受伤了/Control_Group/0008",...]
-    with open(yue_songs_file, 'r', encoding='utf-8') as file1:
-        for line in file1:
+    with open(yue_songs_file, 'r', encoding='utf-8') as file:
+        for line in file:
             yue_song_list.append(line.strip())
 
-    #unique_label_dict = {"Chinese/ZH-Tenor-1/Vibrato/我真的受伤了/Control_Group/0008":[pho_info, label_info]}
-    with open(unique_label_file, 'r', encoding='utf-8') as file2:
+    #song_label_dict = {"Chinese/ZH-Tenor-1/Vibrato/我真的受伤了/Control_Group/0008":[pho_info, label_info]}
+    with open(unique_label_file, 'r', encoding='utf-8') as file:
         index = 0
         key = ""
-        for line in file2:
+        for line in file:
             if len(line) < 2:
                 break
             if index % 3 == 0:
                 key = line.strip()
                 unique_label_dict[key] = []
             else:
-                unique_label_dict[key].append(ast.literal_eval(line)) 
+                unique_label_dict[key].append(ast.literal_eval(line))  
             index += 1
 
-    #unique_extra_info_dict = {"Chinese/ZH-Tenor-1/Vibrato/我真的受伤了/Control_Group/0008":emotion}
-    with open(unique_extra_info_file, 'r', encoding='utf-8') as file3:
-        index = 0
-        key = ""
-        for line in file3:
-            if len(line) < 2:
-                break
-            if index % 2 == 0:
-                key = line.strip()
-            else:
-                unique_extra_info_dict[key] = ast.literal_eval(line)
-            index += 1
-    
     
 def train_check(song):
     return (song not in DEV_LIST) and (song not in TEST_LIST)
@@ -203,30 +189,16 @@ def process_score_info(notes, label_pho_info, utt_id, label = None):
                     print(notes[i].lyric, " phonemes=",phonemes, "j=", j)
                     print("labelind=",labelind)
                     print(utt_id)
-                    print(phnes)
                     print(label_pho_info)
                     print(label)
                     exit(1)
                 phonemes[j] = label_pho_info[labelind]
                 labelind += 1
-            #print(notes[i].lyric, "   ", phonemes, "   labelind=", labelind)
+            #print(notes[i].lyric, "   ", phonemes)
             score_notes.append([notes[i].st, notes[i].et, notes[i].lyric, notes[i].midi, "_".join(phonemes)]) 
             phnes.extend(phonemes)
     
     return score_notes, word_text_list, phnes
-
-
-#处理数据集中的json文件得到技巧等额外信息
-def process_extra_info(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    emotion_list = []
-    for entry in data:
-        if entry['emotion'] == "happy":
-            emotion_list.append(0)
-        else:
-            emotion_list.append(1)
-    return emotion_list
 
 
 #处理textgrid文件获取label
@@ -243,12 +215,7 @@ def process_json_to_pho_score(basepath, tempo, notes):
 
     score_notes, word_text_list, phnes = process_score_info(notes, pho_info, utt_id, label_info)
 
-    if utt_id in unique_extra_info_dict.keys():
-        extra_info = unique_extra_info_dict[utt_id]
-    else:
-        extra_info = process_extra_info(basepath + '.json')
-
-    if len(pho_info) != len(phnes) or len(score_notes) != len(extra_info): #error
+    if len(pho_info) != len(phnes): #error
         print("erro....mismatch(label and score), ")
         print(utt_id)
         print(pho_info)
@@ -261,8 +228,6 @@ def process_json_to_pho_score(basepath, tempo, notes):
         print(label_info)
         print("-----------score_notes=")
         print(score_notes)
-        print("-----------extra_info=")
-        print(extra_info)
         exit(1)
     else: #check score and label
         sign = True
@@ -285,12 +250,10 @@ def process_json_to_pho_score(basepath, tempo, notes):
             print(score_notes)
             exit(1)
     
-    score_notes = [a + [b] for a, b in zip(score_notes, extra_info)]
-
     return " ".join(label_info), \
             " ".join(pho_info), \
             " ".join(word_text_list), \
-            dict(tempo=tempo, item_list=["st", "et", "lyric", "midi", "phn", "emotion"], note=score_notes) 
+            dict(tempo=tempo, item_list=["st", "et", "lyric", "midi", "phn"], note=score_notes) 
 
 
 #src_data = /data3/tyx/dataset/GTSinger/Chinese
@@ -376,14 +339,13 @@ if __name__ == "__main__":
     parser.add_argument("--score_dump", type=str, default="score_dump", help="score dump directory")
     parser.add_argument("--yue_songs_file", type=str, default="./local/yue_songs.txt", help="song list file that \'月\' is pronounced \'yue\'")
     parser.add_argument("--unique_label_file", type=str, default="./local/unique_label.txt", help="unique song-label dict file")
-    parser.add_argument("--unique_extra_info_file", type=str, default="./local/unique_extra_info.txt", help="unique song-extra_info dict file")
     
     args = parser.parse_args()
 
     if not os.path.exists(args.wav_dump):
         os.makedirs(args.wav_dump)
 
-    pre_unique_data(args.yue_songs_file, args.unique_label_file, args.unique_extra_info_file)
+    pre_unique_data(args.yue_songs_file, args.unique_label_file)
 
     process_subset(args.src_data, args.train, train_check, args.fs, args.wav_dump, args.score_dump)
     process_subset(args.src_data, args.dev, dev_check, args.fs, args.wav_dump, args.score_dump)

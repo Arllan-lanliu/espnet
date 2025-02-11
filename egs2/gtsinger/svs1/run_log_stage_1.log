@@ -1,0 +1,35 @@
+nohup: ignoring input
+2025-02-11T15:32:24 (svs.sh:211:main) ./svs.sh --lang zh --local_data_opts --stage 1 --feats_type raw --fs 24000 --fmax 22050 --fmin 0 --n_fft 2048 --n_shift 256 --win_length 2048 --token_type phn --g2p None --cleaner none --train_config conf/tuning/train_visinger2_24k.yaml --inference_config conf/decode.yaml --train_set tr_no_dev --valid_set dev --test_sets dev eval --score_feats_extract syllable_score_feats --srctexts data/tr_no_dev/text --audio_format wav --stage 1 --stop_stage 1
+2025-02-11T15:32:25 (svs.sh:313:main) Stage 1: Data preparation for data/tr_no_dev, data/dev, etc.
+2025-02-11T15:32:25 (data.sh:27:main) local/data.sh --stage 1 --fs 24000 --g2p None
+2025-02-11T15:32:25 (data.sh:51:main) stage 1: Dataset split 
+/data5/arllan/miniconda/envs/espnetenv/lib/python3.10/site-packages/music21/stream/base.py:3689: Music21DeprecationWarning: .flat is deprecated.  Call .flatten() instead
+  return self.iter().getElementsByClass(classFilterList)
+utils/fix_data_dir.sh: file data/tr_no_dev/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/tr_no_dev/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 3444 utterances out of 3477
+fix_data_dir.sh: old files are kept in data/tr_no_dev/.backup
+utils/fix_data_dir.sh: file data/dev/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/dev/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 156 utterances out of 200
+fix_data_dir.sh: old files are kept in data/dev/.backup
+utils/fix_data_dir.sh: file data/eval/utt2spk is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/spk2utt is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/text is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/wav.scp is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/label is not in sorted order or not unique, sorting it
+utils/fix_data_dir.sh: file data/eval/score.scp is not in sorted order or not unique, sorting it
+fix_data_dir.sh: kept 200 utterances out of 211
+fix_data_dir.sh: old files are kept in data/eval/.backup
+2025-02-11T15:33:31 (data.sh:65:main) Successfully finished. [elapsed=66s]
+2025-02-11T15:33:31 (svs.sh:1159:main) Skip the packing stage
+2025-02-11T15:33:31 (svs.sh:1216:main) Skip the uploading to HuggingFace stage
+2025-02-11T15:33:31 (svs.sh:1219:main) Successfully finished. [elapsed=67s]

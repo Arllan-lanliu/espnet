@@ -1,7 +1,5 @@
 nvidia-smi
 
-nohup ./run.sh --stage 1 --stop_stage 1 > run_log_stage_1.log 2>&1 &
-
 #1-4
 nohup ./run.sh --stage 1 --stop_stage 4 > run_log_stage_1_4.log 2>&1 &
 

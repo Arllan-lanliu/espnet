@@ -1,0 +1,4 @@
+Chinese/ZH-Alto-1/Vibrato/南山南/Control_Group/0005
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Chinese/ZH-Alto-1/Pharyngeal/听海/Pharyngeal_Group/0011
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
