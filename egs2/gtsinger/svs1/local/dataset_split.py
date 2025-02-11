@@ -285,7 +285,7 @@ def process_subset(src_data, subset, check_func, fs, wav_dump, score_dump):
                     #Breathy_Group：帮助模型学习带有情感特征的演唱方式
                     #Control_Group：提供标准化的对照数据，用于基础模型训练
                     #Paired_Speech_Group：为语音到歌声（speech-to-singing）任务或歌声分析提供对应的语音数据
-                    for group in ["Breathy", "Control"]:
+                    for group in [skfolder, "Control"]:
                         #key = Alto1_Breathy_不再见_BreathyGroup_0001
                         key = "{}{}_{}_{}_{}_{}".format(sifolder.split("-")[1],sifolder.split("-")[2],skfolder,sofolder,group+"Group",str(i).zfill(4))
                     
@@ -295,12 +295,14 @@ def process_subset(src_data, subset, check_func, fs, wav_dump, score_dump):
                             continue
                         utt_id = "{}_{}".format(UTT_PREFIX,key) #GTSINGER_Alto1_Breathy_不再见_BreathyGroup_0001
                         
+                        """
                         cmd = "sox {}.wav -c 1 -t wavpcm -b 16 -r {} {}.wav".format(
                             path,
                             fs,
                             os.path.join(wav_dump, utt_id)
-                        )
+                        ) 
                         os.system(cmd)
+                        """
                         
                         wavscp.write("{} {}\n".format(utt_id, os.path.join(wav_dump, "{}.wav".format(utt_id)))) 
                         utt2spk.write("{} {}\n".format(utt_id, sifolder.split("-")[1] + sifolder.split("-")[2])) #utt_id Alto1
@@ -313,7 +315,7 @@ def process_subset(src_data, subset, check_func, fs, wav_dump, score_dump):
     score_writer = SingingScoreWriter(score_dump, os.path.join(subset, "score.scp.tmp"))
     text = open(os.path.join(subset, "text"), "w", encoding="utf-8")
     word_text = open(os.path.join(subset, "wordtext"), "w", encoding="utf-8")
-    #xml_line = GTSINGER_Tenor1_Glissando_我的歌声里_BreathyGroup_0000 /data3/tyx/.../Breathy_Group/0000.musicxml
+    #xml_line = GTSINGER_Tenor1_Breathy_我的歌声里_BreathyGroup_0000 /data3/tyx/.../Breathy_Group/0000.musicxml
     for xml_line in scorescp:
         xmlline = xml_line.strip().split(" ")
         tempo, tempo_info = reader[xmlline[0]] #xmlline[0]=GTSINGER_Tenor1_Glissando_我的歌声里_BreathyGroup_0000        
@@ -337,13 +339,14 @@ if __name__ == "__main__":
     parser.add_argument("--score_dump", type=str, default="score_dump", help="score dump directory")
     parser.add_argument("--yue_songs_file", type=str, default="./local/yue_songs.txt", help="song list file that \'月\' is pronounced \'yue\'")
     parser.add_argument("--unique_label_file", type=str, default="./local/unique_label.txt", help="unique song-label dict file")
+    parser.add_argument("--unique_extra_info_file", type=str, default="./local/unique_extra_info.txt", help="unique song-extra_info dict file")
     
     args = parser.parse_args()
 
     if not os.path.exists(args.wav_dump):
         os.makedirs(args.wav_dump)
 
-    pre_unique_data(args.yue_songs_file, args.unique_label_file)
+    pre_unique_data(args.yue_songs_file, args.unique_label_file, args.unique_extra_info_file)
 
     process_subset(args.src_data, args.train, train_check, args.fs, args.wav_dump, args.score_dump)
     process_subset(args.src_data, args.dev, dev_check, args.fs, args.wav_dump, args.score_dump)
