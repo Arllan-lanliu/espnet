@@ -322,6 +322,7 @@ def process_subset(src_data, subset, check_func, fs, wav_dump, score_dump):
                     #Breathy_Group：帮助模型学习带有情感特征的演唱方式
                     #Control_Group：提供标准化的对照数据，用于基础模型训练
                     #Paired_Speech_Group：为语音到歌声（speech-to-singing）任务或歌声分析提供对应的语音数据
+                    #for group in ["Breathy", "Control"]:
                     for group in [skfolder, "Control"]:
                         #key = Alto1_Breathy_不再见_BreathyGroup_0001
                         key = "{}{}_{}_{}_{}_{}".format(sifolder.split("-")[1],sifolder.split("-")[2],skfolder,sofolder,group+"Group",str(i).zfill(4))
@@ -332,14 +333,12 @@ def process_subset(src_data, subset, check_func, fs, wav_dump, score_dump):
                             continue
                         utt_id = "{}_{}".format(UTT_PREFIX,key) #GTSINGER_Alto1_Breathy_不再见_BreathyGroup_0001
                         
-                        """
                         cmd = "sox {}.wav -c 1 -t wavpcm -b 16 -r {} {}.wav".format(
                             path,
                             fs,
                             os.path.join(wav_dump, utt_id)
                         ) 
                         os.system(cmd)
-                        """
                         
                         wavscp.write("{} {}\n".format(utt_id, os.path.join(wav_dump, "{}.wav".format(utt_id)))) 
                         utt2spk.write("{} {}\n".format(utt_id, sifolder.split("-")[1] + sifolder.split("-")[2])) #utt_id Alto1

@@ -52,6 +52,9 @@ min_wav_duration=0.1 # Minimum duration in second.
 max_wav_duration=20  # Maximum duration in second.
 use_sid=true        # Whether to use speaker id as the inputs (Need utt2spk in data directory).
 use_lid=false        # Whether to use language id as the inputs (Need utt2lang in data directory).
+
+use_emotion=true     # Whether to use extra info emotion as the inputs
+
 use_xvector=false    # Whether to use x-vector
 feats_extract=fbank        # On-the-fly feature extractor.
 feats_normalize=global_mvn # On-the-fly feature normalizer.
@@ -149,6 +152,7 @@ Options:
     --max_wav_duration # Maximum duration in second (default="${max_wav_duration}").
     --use_sid          # Whether to use speaker id as the inputs (default="${use_sid}").
     --use_lid          # Whether to use language id as the inputs (default="${use_lid}").
+    --use_emotion      # Whether to use extra info emotion as the inputs
     --use_xvector      # Whether to use X-vector (Require Kaldi, default="${use_xvector}").
     --fs               # Sampling rate (default="${fs}").
     --fmax             # Maximum frequency of Mel basis (default="${fmax}").
@@ -561,6 +565,10 @@ if ! "${skip_train}"; then
         if "${use_lid}"; then
             _opts+="--train_data_path_and_name_and_type ${_train_dir}/utt2lid,lids,text_int "
             _opts+="--valid_data_path_and_name_and_type ${_valid_dir}/utt2lid,lids,text_int "
+        fi
+
+        if "${use_emotion}"; then
+            _opts+="--extra_info emotion"
         fi
 
         # 1. Split the key file
